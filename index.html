@@ -898,13 +898,27 @@ I design, develop, and deliver — from custom web apps and WordPress websites t
    
              
               <!-- End Portfolio Item -->
-<!-- Full-Width Responsive Video Section -->
-<section class="w-full overflow-hidden">
-  <video class="w-full h-auto max-h-[600px] object-cover" autoplay muted loop playsinline>
-    <source src="post3.mp4" type="video/mp4" />
-    Your browser does not support the video tag.
-  </video>
-</section>
+<!-- Portfolio Video Item -->
+<div class="col-12 portfolio-item isotope-item filter-web">
+  <div class="portfolio-content h-100 position-relative overflow-hidden rounded shadow-sm" data-aos="fade-up" data-aos-delay="200">
+    
+    <!-- Responsive Video -->
+    <video class="w-100 h-auto" autoplay muted loop playsinline style="max-height:600px; object-fit:cover; border-radius:8px;">
+      <source src="post3.mp4" type="video/mp4" />
+      Your browser does not support the video tag.
+    </video>
+
+    <!-- Optional Overlay/Info -->
+    <div class="portfolio-info position-absolute bottom-0 start-0 p-3 w-100 bg-gradient-to-t from-black/50 text-white rounded-bottom">
+      <h4 class="mb-1">Portfolio Reel</h4>
+      <p class="mb-0">Creative showcase video for client projects</p>
+      <a href="post3.mp4" class="glightbox preview-link text-white" title="Portfolio Video">
+        <i class="bi bi-zoom-in"></i> Preview
+      </a>
+    </div>
+
+  </div>
+</div>
             <!-- End Portfolio Container -->
           </div>
         </div>
