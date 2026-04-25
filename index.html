@@ -5,1278 +5,910 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <title>Waleed Anwar — Full Stack Developer & eCommerce Specialist</title>
 <meta name="description" content="Full Stack Web Developer, Shopify Expert & WordPress Specialist based in Faisalabad, Pakistan."/>
-
-<!-- Fonts -->
-<link href="https://fonts.googleapis.com/css2?family=Clash+Display:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet"/>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css"/>
-
-<!-- EmailJS -->
 <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
-
 <style>
-/* ══════════════════════════════════════════════
-   RESET & VARIABLES
-══════════════════════════════════════════════ */
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 :root{
-  --bg:#060911;
-  --surface:#0d1117;
-  --card:#111827;
-  --card2:#141d2b;
-  --border:rgba(255,255,255,0.06);
-  --border2:rgba(255,255,255,0.1);
-  --text:#eef2ff;
-  --muted:#6b7280;
-  --muted2:#9ca3af;
-  --cyan:#00d4ff;
-  --cyan-dim:rgba(0,212,255,0.1);
-  --cyan-glow:rgba(0,212,255,0.25);
-  --violet:#7c3aed;
-  --violet-dim:rgba(124,58,237,0.12);
-  --green:#10b981;
-  --green-dim:rgba(16,185,129,0.12);
-  --orange:#f59e0b;
-  --r:12px;
-  --r2:16px;
+  --bg:#04070f;
+  --surface:#080e1a;
+  --card:#0c1422;
+  --border:rgba(255,255,255,0.07);
+  --border2:rgba(0,200,255,0.18);
+  --text:#f0f4ff;
+  --muted:#5a6a80;
+  --muted2:#8a9bb0;
+  --cyan:#00c8ff;
+  --cyan-dim:rgba(0,200,255,0.08);
+  --cyan-glow:rgba(0,200,255,0.2);
+  --green:#00d98b;
+  --green-dim:rgba(0,217,139,0.1);
+  --orange:#ffb347;
+  --r:10px;
   --sidebar:260px;
 }
-html{scroll-behavior:smooth;scrollbar-width:thin;scrollbar-color:var(--cyan) var(--surface)}
+html{scroll-behavior:smooth}
 body{
   background:var(--bg);
   color:var(--text);
-  font-family:'Plus Jakarta Sans',sans-serif;
-  font-weight:400;
+  font-family:'DM Sans',sans-serif;
+  font-size:15px;
   line-height:1.7;
   -webkit-font-smoothing:antialiased;
   overflow-x:hidden;
 }
 a{text-decoration:none;color:inherit}
 ul{list-style:none}
-img{max-width:100%;border-radius:var(--r)}
 ::selection{background:var(--cyan);color:#000}
 
-/* ══ SCROLLBAR ══ */
-::-webkit-scrollbar{width:4px}
+/* SCROLLBAR */
+::-webkit-scrollbar{width:3px}
 ::-webkit-scrollbar-track{background:var(--surface)}
-::-webkit-scrollbar-thumb{background:var(--cyan);border-radius:4px}
+::-webkit-scrollbar-thumb{background:var(--cyan);border-radius:3px}
 
-/* ══ CURSOR ══ */
-.cursor{
-  width:12px;height:12px;background:var(--cyan);
-  border-radius:50%;position:fixed;pointer-events:none;z-index:9999;
-  transform:translate(-50%,-50%);transition:transform .1s;mix-blend-mode:difference;
-}
-.cursor-ring{
-  width:36px;height:36px;border:1px solid var(--cyan-glow);
-  border-radius:50%;position:fixed;pointer-events:none;z-index:9998;
-  transform:translate(-50%,-50%);transition:all .18s ease;
-}
-
-/* ══ NOISE OVERLAY ══ */
-body::before{
-  content:'';position:fixed;inset:0;
-  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
-  pointer-events:none;z-index:0;opacity:.4;
-}
-
-/* ══════════════════════════════════════════════
-   LAYOUT
-══════════════════════════════════════════════ */
-.layout{display:flex;min-height:100vh}
-
-/* ══ SIDEBAR ══ */
+/* SIDEBAR */
 .sidebar{
   width:var(--sidebar);
   background:var(--surface);
   border-right:1px solid var(--border);
   position:fixed;top:0;left:0;bottom:0;
   display:flex;flex-direction:column;
-  padding:32px 0;z-index:100;
-  transition:transform .3s ease;
+  padding:28px 0;z-index:200;
+  transition:transform .3s cubic-bezier(.4,0,.2,1);
+  overflow-y:auto;
 }
-.sidebar-logo{
-  padding:0 24px 28px;
+.sb-head{
+  padding:0 22px 24px;
   border-bottom:1px solid var(--border);
-  margin-bottom:24px;
+  margin-bottom:20px;
 }
-.sidebar-logo .name{
-  font-family:'Clash Display',sans-serif;
-  font-size:22px;font-weight:700;
-  letter-spacing:-0.5px;
-}
-.sidebar-logo .name em{color:var(--cyan);font-style:normal}
-.sidebar-logo .role{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:1.5px;margin-top:4px}
-
-.sidebar-avatar{
-  width:72px;height:72px;border-radius:50%;
-  background:linear-gradient(135deg,var(--cyan),var(--violet));
+.sb-av{
+  width:60px;height:60px;border-radius:50%;
+  background:linear-gradient(135deg,var(--cyan),#0056ff);
   display:flex;align-items:center;justify-content:center;
-  font-family:'Clash Display',sans-serif;font-size:26px;font-weight:700;color:#000;
-  margin-bottom:12px;border:2px solid var(--border2);
-  flex-shrink:0;
+  font-family:'Syne',sans-serif;font-size:22px;font-weight:800;color:#000;
+  margin-bottom:14px;
+  box-shadow:0 0 0 3px rgba(0,200,255,0.15);
 }
+.sb-name{font-family:'Syne',sans-serif;font-size:18px;font-weight:700;letter-spacing:-0.3px}
+.sb-name em{color:var(--cyan);font-style:normal}
+.sb-role{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:1.5px;margin-top:3px}
+.sb-avail{
+  display:inline-flex;align-items:center;gap:6px;
+  background:var(--green-dim);color:var(--green);
+  padding:4px 10px;border-radius:20px;
+  font-size:11px;font-weight:600;margin-top:10px;
+}
+.sb-avail .dot{width:5px;height:5px;background:var(--green);border-radius:50%;animation:pulse 1.8s infinite}
+@keyframes pulse{0%{box-shadow:0 0 0 0 rgba(0,217,139,.5)}70%{box-shadow:0 0 0 6px rgba(0,217,139,0)}100%{box-shadow:0 0 0 0 rgba(0,217,139,0)}}
 
-.nav-section{flex:1;padding:0 12px;overflow-y:auto}
-.nav-label{font-size:10px;text-transform:uppercase;letter-spacing:2px;color:var(--muted);padding:0 12px;margin-bottom:8px}
-.nav-item{
-  display:flex;align-items:center;gap:12px;
-  padding:11px 12px;border-radius:10px;
+.nav-links{flex:1;padding:0 12px}
+.nav-a{
+  display:flex;align-items:center;gap:11px;
+  padding:10px 12px;border-radius:8px;
   color:var(--muted2);font-size:14px;font-weight:500;
-  transition:all .2s;cursor:pointer;margin-bottom:2px;
+  transition:all .2s;margin-bottom:2px;
 }
-.nav-item:hover,.nav-item.active{
-  background:var(--cyan-dim);color:var(--cyan);
-}
-.nav-item i{font-size:17px;width:20px;text-align:center}
+.nav-a:hover,.nav-a.active{background:var(--cyan-dim);color:var(--cyan)}
+.nav-a i{font-size:16px;width:18px;text-align:center;flex-shrink:0}
 
-.sidebar-socials{
-  padding:16px 24px 0;
+.sb-socials{
+  padding:18px 22px 0;
   border-top:1px solid var(--border);
-  display:flex;gap:12px;
+  display:flex;gap:8px;flex-wrap:wrap;
 }
-.soc-btn{
-  width:36px;height:36px;border-radius:10px;
+.soc{
+  width:34px;height:34px;border-radius:8px;
   background:var(--card);border:1px solid var(--border);
   display:flex;align-items:center;justify-content:center;
-  color:var(--muted2);font-size:15px;
-  transition:all .2s;
+  color:var(--muted2);font-size:14px;transition:all .2s;
 }
-.soc-btn:hover{background:var(--cyan-dim);color:var(--cyan);border-color:var(--cyan-glow)}
+.soc:hover{background:var(--cyan-dim);color:var(--cyan);border-color:var(--border2)}
 
-/* Mobile toggle */
-.sidebar-toggle{
-  display:none;position:fixed;top:16px;left:16px;z-index:200;
-  width:42px;height:42px;background:var(--surface);
-  border:1px solid var(--border);border-radius:10px;
-  align-items:center;justify-content:center;
-  color:var(--text);font-size:20px;cursor:pointer;
+/* MOBILE TOP BAR */
+.topbar{
+  display:none;position:fixed;top:0;left:0;right:0;z-index:300;
+  height:56px;
+  background:rgba(4,7,15,0.95);backdrop-filter:blur(12px);
+  border-bottom:1px solid var(--border);
+  align-items:center;justify-content:space-between;
+  padding:0 18px;
 }
-.sidebar-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:99;backdrop-filter:blur(2px)}
-
-/* ══ MAIN CONTENT ══ */
-.main{
-  margin-left:var(--sidebar);
-  flex:1;padding:0;
-  position:relative;z-index:1;
+.topbar-name{font-family:'Syne',sans-serif;font-size:17px;font-weight:700}
+.topbar-name em{color:var(--cyan);font-style:normal}
+.menu-btn{
+  width:38px;height:38px;background:var(--card);
+  border:1px solid var(--border);border-radius:8px;
+  display:flex;align-items:center;justify-content:center;
+  color:var(--text);font-size:18px;cursor:pointer;
 }
+.overlay{
+  display:none;position:fixed;inset:0;
+  background:rgba(0,0,0,.7);z-index:199;
+  backdrop-filter:blur(4px);
+}
+.overlay.show{display:block}
 
-/* ══════════════════════════════════════════════
-   SECTIONS
-══════════════════════════════════════════════ */
-section{padding:80px 56px;max-width:1100px}
-.section-badge{
-  display:inline-flex;align-items:center;gap:8px;
-  background:var(--cyan-dim);border:1px solid rgba(0,212,255,0.2);
-  color:var(--cyan);padding:5px 14px;border-radius:100px;
+/* MAIN */
+.main{margin-left:var(--sidebar)}
+
+/* SECTIONS */
+section{padding:72px 52px;max-width:1000px}
+.badge{
+  display:inline-flex;align-items:center;gap:7px;
+  background:var(--cyan-dim);border:1px solid var(--border2);
+  color:var(--cyan);padding:4px 12px;border-radius:20px;
   font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:1.5px;
-  margin-bottom:16px;
-}
-.section-badge .dot{width:6px;height:6px;background:var(--cyan);border-radius:50%}
-.section-h{
-  font-family:'Clash Display',sans-serif;
-  font-size:clamp(32px,3.5vw,48px);
-  font-weight:700;letter-spacing:-1.5px;line-height:1.1;
   margin-bottom:14px;
 }
-.section-h em{font-style:normal;color:var(--cyan)}
-.section-sub{color:var(--muted2);font-size:16px;max-width:550px;line-height:1.75;margin-bottom:52px}
-
-/* ══════════════════════════════════════════════
-   HERO
-══════════════════════════════════════════════ */
-#hero{
-  min-height:100vh;
-  display:flex;align-items:center;
-  padding:80px 56px;
-  position:relative;overflow:hidden;
+.badge .d{width:5px;height:5px;background:var(--cyan);border-radius:50%}
+.sh{
+  font-family:'Syne',sans-serif;
+  font-size:clamp(28px,3.5vw,44px);
+  font-weight:800;letter-spacing:-1.5px;line-height:1.1;
+  margin-bottom:12px;
 }
-.hero-bg-grid{
+.sh em{font-style:normal;color:var(--cyan)}
+.ssub{color:var(--muted2);font-size:15px;max-width:520px;line-height:1.75;margin-bottom:44px}
+
+/* HERO */
+#hero{
+  min-height:100vh;display:flex;align-items:center;
+  padding:80px 52px;position:relative;overflow:hidden;
+}
+.hero-grid{
   position:absolute;inset:0;
   background-image:
-    linear-gradient(rgba(0,212,255,0.03) 1px,transparent 1px),
-    linear-gradient(90deg,rgba(0,212,255,0.03) 1px,transparent 1px);
-  background-size:60px 60px;pointer-events:none;
+    linear-gradient(rgba(0,200,255,0.025) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(0,200,255,0.025) 1px,transparent 1px);
+  background-size:50px 50px;pointer-events:none;
 }
 .hero-glow{
-  position:absolute;width:600px;height:600px;
-  background:radial-gradient(circle,rgba(0,212,255,0.08),transparent 70%);
-  top:-100px;right:-100px;pointer-events:none;border-radius:50%;
-  animation:floatGlow 8s ease-in-out infinite;
+  position:absolute;width:500px;height:500px;
+  background:radial-gradient(circle,rgba(0,200,255,0.07),transparent 70%);
+  top:-80px;right:-80px;pointer-events:none;border-radius:50%;
 }
-.hero-glow2{
-  position:absolute;width:400px;height:400px;
-  background:radial-gradient(circle,rgba(124,58,237,0.06),transparent 70%);
-  bottom:-80px;left:20%;pointer-events:none;border-radius:50%;
-  animation:floatGlow 10s ease-in-out infinite reverse;
+.hc{position:relative;z-index:2;max-width:680px}
+.hero-tag{
+  display:inline-flex;align-items:center;gap:8px;
+  background:var(--card);border:1px solid var(--border);
+  padding:7px 16px;border-radius:20px;font-size:13px;
+  color:var(--muted2);margin-bottom:24px;
 }
-@keyframes floatGlow{
-  0%,100%{transform:translateY(0) scale(1)}
-  50%{transform:translateY(-30px) scale(1.05)}
-}
-.hero-content{position:relative;z-index:2;max-width:720px}
-.hero-status{
-  display:inline-flex;align-items:center;gap:10px;
-  background:var(--card);border:1px solid var(--border2);
-  padding:8px 18px;border-radius:100px;font-size:13px;
-  color:var(--muted2);margin-bottom:28px;
-  animation:fadeUp .6s ease both;
-}
-.hero-status .pulse{
-  width:8px;height:8px;background:var(--green);
-  border-radius:50%;animation:pulseDot 1.8s infinite;
-  box-shadow:0 0 0 0 rgba(16,185,129,0.4);
-}
-@keyframes pulseDot{
-  0%{box-shadow:0 0 0 0 rgba(16,185,129,0.4)}
-  70%{box-shadow:0 0 0 8px rgba(16,185,129,0)}
-  100%{box-shadow:0 0 0 0 rgba(16,185,129,0)}
-}
+.hero-tag .g{width:7px;height:7px;background:var(--green);border-radius:50%;animation:pulse 1.8s infinite}
 .hero-h{
-  font-family:'Clash Display',sans-serif;
-  font-size:clamp(44px,5.5vw,72px);
-  font-weight:700;letter-spacing:-2.5px;line-height:1.05;
-  margin-bottom:20px;
-  animation:fadeUp .6s .1s ease both;
+  font-family:'Syne',sans-serif;
+  font-size:clamp(38px,5vw,64px);
+  font-weight:800;letter-spacing:-2px;line-height:1.05;
+  margin-bottom:16px;
 }
-.hero-h .line2{color:var(--cyan);display:block}
-.hero-h .line3{
-  font-size:clamp(20px,2.5vw,32px);
-  font-weight:400;color:var(--muted2);letter-spacing:-0.5px;
-  display:block;margin-top:8px;
+.hero-h .name{color:var(--cyan);display:block}
+.hero-h .sub{
+  font-size:clamp(17px,2vw,26px);
+  font-weight:400;color:var(--muted2);
+  letter-spacing:-0.3px;display:block;margin-top:6px;
 }
-.typed-text{color:var(--cyan)}
+.typed{color:var(--cyan)}
 .blink{animation:blink .8s step-end infinite}
 @keyframes blink{0%,100%{opacity:1}50%{opacity:0}}
-.hero-desc{
-  color:var(--muted2);font-size:17px;line-height:1.8;
-  max-width:560px;margin-bottom:40px;
-  animation:fadeUp .6s .2s ease both;
+.hero-p{
+  color:var(--muted2);font-size:15.5px;line-height:1.8;
+  max-width:520px;margin-bottom:36px;
 }
-.hero-btns{
-  display:flex;gap:14px;flex-wrap:wrap;margin-bottom:52px;
-  animation:fadeUp .6s .3s ease both;
-}
-.btn-cta{
-  display:inline-flex;align-items:center;gap:9px;
+.hero-btns{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:44px}
+.btn-p{
+  display:inline-flex;align-items:center;gap:8px;
   background:var(--cyan);color:#000;
-  padding:13px 26px;border-radius:11px;
-  font-weight:700;font-size:15px;
-  transition:all .25s;border:none;cursor:pointer;
+  padding:12px 24px;border-radius:9px;
+  font-weight:700;font-size:14px;
+  border:none;cursor:pointer;transition:all .25s;
+  font-family:'DM Sans',sans-serif;
 }
-.btn-cta:hover{transform:translateY(-3px);box-shadow:0 12px 32px var(--cyan-glow)}
-.btn-outline{
-  display:inline-flex;align-items:center;gap:9px;
-  background:transparent;color:var(--text);
-  padding:13px 26px;border-radius:11px;
-  font-weight:600;font-size:15px;
-  border:1px solid var(--border2);
-  transition:all .25s;cursor:pointer;
-}
-.btn-outline:hover{border-color:var(--cyan);color:var(--cyan);transform:translateY(-3px)}
+.btn-p:hover{transform:translateY(-2px);box-shadow:0 10px 28px rgba(0,200,255,0.25)}
 .btn-wa{
-  display:inline-flex;align-items:center;gap:9px;
-  background:#25d366;color:#fff;
-  padding:13px 26px;border-radius:11px;
-  font-weight:700;font-size:15px;
-  transition:all .25s;border:none;cursor:pointer;
+  display:inline-flex;align-items:center;gap:8px;
+  background:#1db954;color:#fff;
+  padding:12px 24px;border-radius:9px;
+  font-weight:700;font-size:14px;
+  border:none;cursor:pointer;transition:all .25s;
 }
-.btn-wa:hover{transform:translateY(-3px);box-shadow:0 12px 32px rgba(37,211,102,0.3)}
+.btn-wa:hover{transform:translateY(-2px);box-shadow:0 10px 28px rgba(29,185,84,0.3)}
+.btn-o{
+  display:inline-flex;align-items:center;gap:8px;
+  background:transparent;color:var(--text);
+  padding:12px 24px;border-radius:9px;
+  font-weight:600;font-size:14px;
+  border:1px solid var(--border);cursor:pointer;transition:all .25s;
+}
+.btn-o:hover{border-color:var(--cyan);color:var(--cyan)}
 
 .hero-stats{
-  display:flex;gap:0;animation:fadeUp .6s .4s ease both;
-  border:1px solid var(--border);border-radius:var(--r2);
+  display:flex;gap:0;
+  border:1px solid var(--border);border-radius:12px;
   background:var(--card);overflow:hidden;width:fit-content;
 }
-.hstat{
-  padding:20px 32px;text-align:center;
-  border-right:1px solid var(--border);
+.hs{padding:18px 28px;text-align:center;border-right:1px solid var(--border)}
+.hs:last-child{border-right:none}
+.hs-n{
+  font-family:'Syne',sans-serif;
+  font-size:26px;font-weight:800;color:var(--cyan);line-height:1;margin-bottom:3px;
 }
-.hstat:last-child{border-right:none}
-.hstat-num{
-  font-family:'Clash Display',sans-serif;
-  font-size:28px;font-weight:700;color:var(--cyan);
-  line-height:1;margin-bottom:4px;
-}
-.hstat-label{font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:1px}
+.hs-l{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:1px}
 
-@keyframes fadeUp{
-  from{opacity:0;transform:translateY(28px)}
-  to{opacity:1;transform:translateY(0)}
-}
-
-/* ══════════════════════════════════════════════
-   ABOUT
-══════════════════════════════════════════════ */
-#about{padding-top:80px}
-.about-grid{display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:start}
-.about-card{
+/* ABOUT */
+.about-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px;align-items:start}
+.card{
   background:var(--card);border:1px solid var(--border);
-  border-radius:var(--r2);padding:32px;
+  border-radius:12px;padding:28px;
   position:relative;overflow:hidden;
 }
-.about-card::before{
+.card::before{
   content:'';position:absolute;top:0;left:0;right:0;height:2px;
-  background:linear-gradient(90deg,var(--cyan),var(--violet));
+  background:linear-gradient(90deg,var(--cyan),#0056ff);
 }
-.info-list{margin-top:8px}
+.card p{font-size:14.5px;color:var(--muted2);line-height:1.8;margin-bottom:14px}
+.card p strong{color:var(--text)}
+.card p:last-child{margin-bottom:0}
 .info-row{
-  display:flex;align-items:center;gap:14px;
-  padding:12px 0;border-bottom:1px solid var(--border);
+  display:flex;align-items:flex-start;gap:12px;
+  padding:10px 0;border-bottom:1px solid var(--border);
   font-size:14px;
 }
 .info-row:last-child{border-bottom:none}
-.info-key{color:var(--muted);min-width:90px;font-size:13px;text-transform:uppercase;letter-spacing:.5px}
-.info-val{color:var(--text);font-weight:500}
-.info-val a{color:var(--cyan)}
-.avail-badge{
-  display:inline-flex;align-items:center;gap:6px;
-  background:var(--green-dim);color:var(--green);
-  padding:3px 10px;border-radius:100px;font-size:12px;font-weight:600;
-}
-.avail-badge .dot{width:6px;height:6px;background:var(--green);border-radius:50%;animation:pulseDot 1.8s infinite}
-.about-text{font-size:15px;color:var(--muted2);line-height:1.8;margin-bottom:16px}
-.about-text strong{color:var(--text)}
+.ik{color:var(--muted);min-width:80px;font-size:12px;text-transform:uppercase;letter-spacing:.5px;padding-top:1px}
+.iv{color:var(--text);font-weight:500}
+.iv a{color:var(--cyan)}
 
-/* ══════════════════════════════════════════════
-   SKILLS
-══════════════════════════════════════════════ */
+/* SKILLS */
 #skills{background:var(--surface)}
-.skills-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.skills-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
 .skill-bar{
   background:var(--card);border:1px solid var(--border);
-  border-radius:var(--r);padding:18px 22px;
-  transition:border-color .25s,transform .25s;
+  border-radius:10px;padding:16px 18px;
+  transition:border-color .2s;
 }
-.skill-bar:hover{border-color:rgba(0,212,255,0.25);transform:translateY(-2px)}
-.skill-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px}
-.skill-name{font-size:14px;font-weight:600;color:var(--text)}
-.skill-pct{font-size:13px;color:var(--cyan);font-weight:700;font-family:'Clash Display',sans-serif}
-.skill-track{height:5px;background:rgba(255,255,255,0.06);border-radius:5px;overflow:hidden}
-.skill-fill{
-  height:100%;border-radius:5px;
-  background:linear-gradient(90deg,var(--cyan),var(--violet));
-  width:0;transition:width 1.2s cubic-bezier(.4,0,.2,1);
-}
-
-/* Tech tags */
-.tags-wrap{display:flex;flex-wrap:wrap;gap:8px;margin-top:32px}
+.skill-bar:hover{border-color:var(--border2)}
+.skill-top{display:flex;justify-content:space-between;margin-bottom:9px}
+.skill-name{font-size:13.5px;font-weight:600}
+.skill-pct{font-size:13px;color:var(--cyan);font-weight:700;font-family:'Syne',sans-serif}
+.skill-track{height:4px;background:rgba(255,255,255,0.05);border-radius:4px;overflow:hidden}
+.skill-fill{height:100%;border-radius:4px;background:linear-gradient(90deg,var(--cyan),#0056ff);width:0;transition:width 1.2s cubic-bezier(.4,0,.2,1)}
+.tags{display:flex;flex-wrap:wrap;gap:7px;margin-top:28px}
 .tag{
-  padding:6px 14px;border-radius:8px;font-size:12px;font-weight:600;
+  padding:5px 12px;border-radius:7px;font-size:12px;font-weight:500;
   border:1px solid var(--border);background:var(--card);color:var(--muted2);
   transition:all .2s;
 }
-.tag:hover{border-color:var(--cyan-glow);color:var(--cyan);background:var(--cyan-dim)}
+.tag:hover{border-color:var(--border2);color:var(--cyan)}
 
-/* ══════════════════════════════════════════════
-   RESUME / EXPERIENCE
-══════════════════════════════════════════════ */
-#resume{}
-.resume-grid{display:grid;grid-template-columns:1fr 1fr;gap:32px}
-.resume-col h3{
-  font-family:'Clash Display',sans-serif;
-  font-size:18px;font-weight:700;margin-bottom:24px;
-  color:var(--text);
-  display:flex;align-items:center;gap:10px;
+/* RESUME */
+.resume-grid{display:grid;grid-template-columns:1fr 1fr;gap:28px}
+.rcol h3{
+  font-family:'Syne',sans-serif;
+  font-size:16px;font-weight:700;margin-bottom:20px;
+  color:var(--text);display:flex;align-items:center;gap:8px;
 }
-.resume-col h3::after{
-  content:'';flex:1;height:1px;background:var(--border);
-}
-.timeline-item{
-  position:relative;padding-left:24px;padding-bottom:28px;
+.rcol h3::after{content:'';flex:1;height:1px;background:var(--border)}
+.tl{
+  position:relative;padding-left:20px;padding-bottom:24px;
   border-left:1px solid var(--border);
 }
-.timeline-item:last-child{border-left:1px solid transparent;padding-bottom:0}
-.timeline-item::before{
-  content:'';position:absolute;left:-5px;top:5px;
-  width:9px;height:9px;border-radius:50%;
-  background:var(--cyan);box-shadow:0 0 10px var(--cyan-glow);
+.tl:last-child{border-left:1px solid transparent;padding-bottom:0}
+.tl::before{
+  content:'';position:absolute;left:-4px;top:5px;
+  width:7px;height:7px;border-radius:50%;
+  background:var(--cyan);box-shadow:0 0 8px var(--cyan-glow);
 }
-.t-period{
-  display:inline-flex;align-items:center;gap:6px;
+.tl-period{
+  display:inline-flex;align-items:center;gap:5px;
   background:var(--cyan-dim);color:var(--cyan);
-  font-size:11px;font-weight:600;padding:3px 10px;
-  border-radius:6px;margin-bottom:8px;letter-spacing:.5px;
+  font-size:10.5px;font-weight:600;padding:2px 9px;
+  border-radius:5px;margin-bottom:7px;letter-spacing:.5px;
 }
-.t-role{font-family:'Clash Display',sans-serif;font-size:17px;font-weight:600;margin-bottom:3px}
-.t-org{font-size:13px;color:var(--muted);margin-bottom:12px}
-.t-desc{font-size:14px;color:var(--muted2);line-height:1.7}
-.t-list{margin-top:8px;display:flex;flex-direction:column;gap:6px}
-.t-list li{
-  font-size:13px;color:var(--muted2);line-height:1.6;
-  display:flex;gap:8px;
-}
-.t-list li::before{content:'→';color:var(--cyan);flex-shrink:0;font-size:12px;margin-top:2px}
+.tl-role{font-family:'Syne',sans-serif;font-size:15px;font-weight:600;margin-bottom:2px}
+.tl-org{font-size:12.5px;color:var(--muted);margin-bottom:10px}
+.tl-desc{font-size:13.5px;color:var(--muted2);line-height:1.7}
+.tl ul{margin-top:8px;display:flex;flex-direction:column;gap:5px}
+.tl ul li{font-size:13px;color:var(--muted2);display:flex;gap:7px;line-height:1.6}
+.tl ul li::before{content:'→';color:var(--cyan);flex-shrink:0;font-size:11px;margin-top:3px}
 
-/* ══════════════════════════════════════════════
-   PORTFOLIO
-══════════════════════════════════════════════ */
+/* PORTFOLIO */
 #portfolio{background:var(--surface)}
-.portfolio-grid{
-  display:grid;grid-template-columns:repeat(3,1fr);gap:20px;
-}
-.p-card{
+.port-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.pc{
   background:var(--card);border:1px solid var(--border);
-  border-radius:var(--r2);overflow:hidden;
+  border-radius:12px;overflow:hidden;
   transition:transform .3s,border-color .3s,box-shadow .3s;
-  position:relative;
 }
-.p-card:hover{
-  transform:translateY(-6px);
-  border-color:rgba(0,212,255,0.25);
-  box-shadow:0 20px 60px rgba(0,0,0,0.4);
+.pc:hover{transform:translateY(-5px);border-color:var(--border2);box-shadow:0 16px 48px rgba(0,0,0,.4)}
+.pc-img{
+  height:140px;display:flex;align-items:center;justify-content:center;
+  flex-direction:column;gap:6px;
+  background:linear-gradient(135deg,var(--surface),var(--card));
+  font-size:30px;
 }
-.p-img-wrap{
-  height:180px;overflow:hidden;position:relative;background:var(--card2);
-  display:flex;align-items:center;justify-content:center;
-}
-.p-img-placeholder{
-  width:100%;height:100%;
-  display:flex;align-items:center;justify-content:center;
-  flex-direction:column;gap:8px;
-  background:linear-gradient(135deg,var(--card2),var(--card));
-  font-size:36px;
-}
-.p-img-placeholder span{font-size:12px;color:var(--muted);font-weight:500}
-.p-img-wrap img{width:100%;height:100%;object-fit:cover;transition:transform .4s}
-.p-card:hover .p-img-wrap img{transform:scale(1.06)}
-.p-body{padding:20px}
-.p-num{font-size:11px;color:var(--cyan);font-weight:700;letter-spacing:1px;text-transform:uppercase;margin-bottom:6px}
-.p-title{font-family:'Clash Display',sans-serif;font-size:16px;font-weight:600;margin-bottom:6px}
-.p-desc{font-size:13px;color:var(--muted2);line-height:1.6;margin-bottom:16px}
-.p-link{
-  display:inline-flex;align-items:center;gap:6px;
-  color:var(--cyan);font-size:13px;font-weight:600;
-  transition:gap .2s;
-}
-.p-link:hover{gap:10px}
+.pc-img span{font-size:11px;color:var(--muted);font-weight:500}
+.pc-body{padding:16px}
+.pc-num{font-size:10px;color:var(--cyan);font-weight:700;letter-spacing:1px;text-transform:uppercase;margin-bottom:5px}
+.pc-title{font-family:'Syne',sans-serif;font-size:14.5px;font-weight:700;margin-bottom:5px}
+.pc-desc{font-size:12.5px;color:var(--muted2);line-height:1.6;margin-bottom:14px}
+.pc-link{display:inline-flex;align-items:center;gap:5px;color:var(--cyan);font-size:12.5px;font-weight:600;transition:gap .2s}
+.pc-link:hover{gap:9px}
 
-/* ══════════════════════════════════════════════
-   SERVICES
-══════════════════════════════════════════════ */
-#services{}
-.services-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
-.srv-card{
+/* SERVICES */
+.srv-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.srv{
   background:var(--card);border:1px solid var(--border);
-  border-radius:var(--r2);padding:30px;
+  border-radius:12px;padding:24px;
   transition:all .3s;position:relative;overflow:hidden;
 }
-.srv-card::after{
+.srv::after{
   content:'';position:absolute;bottom:0;left:0;right:0;height:2px;
-  background:linear-gradient(90deg,var(--cyan),var(--violet));
+  background:linear-gradient(90deg,var(--cyan),#0056ff);
   transform:scaleX(0);transition:transform .3s;transform-origin:left;
 }
-.srv-card:hover{transform:translateY(-4px);border-color:rgba(0,212,255,0.2)}
-.srv-card:hover::after{transform:scaleX(1)}
+.srv:hover{transform:translateY(-3px);border-color:var(--border2)}
+.srv:hover::after{transform:scaleX(1)}
 .srv-icon{
-  width:52px;height:52px;border-radius:14px;
-  background:var(--cyan-dim);border:1px solid rgba(0,212,255,0.2);
+  width:44px;height:44px;border-radius:11px;
+  background:var(--cyan-dim);border:1px solid var(--border2);
   display:flex;align-items:center;justify-content:center;
-  font-size:24px;color:var(--cyan);margin-bottom:18px;
+  font-size:20px;color:var(--cyan);margin-bottom:14px;
 }
-.srv-title{font-family:'Clash Display',sans-serif;font-size:18px;font-weight:600;margin-bottom:10px}
-.srv-desc{font-size:14px;color:var(--muted2);line-height:1.7;margin-bottom:18px}
-.srv-tags{display:flex;flex-wrap:wrap;gap:6px}
-.srv-tag{
-  font-size:11px;padding:3px 9px;border-radius:6px;
-  background:var(--card2);color:var(--muted2);border:1px solid var(--border);
-}
+.srv-title{font-family:'Syne',sans-serif;font-size:16px;font-weight:700;margin-bottom:8px}
+.srv-desc{font-size:13.5px;color:var(--muted2);line-height:1.7;margin-bottom:14px}
+.srv-tags{display:flex;flex-wrap:wrap;gap:5px}
+.srv-tag{font-size:11px;padding:3px 8px;border-radius:5px;background:rgba(255,255,255,0.04);color:var(--muted2);border:1px solid var(--border)}
 
-/* ══════════════════════════════════════════════
-   TESTIMONIALS
-══════════════════════════════════════════════ */
+/* TESTIMONIALS */
 #testimonials{background:var(--surface)}
-.testi-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
-.testi-card{
+.tg{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.tc{
   background:var(--card);border:1px solid var(--border);
-  border-radius:var(--r2);padding:28px;
-  transition:all .3s;
+  border-radius:12px;padding:24px;transition:all .3s;
 }
-.testi-card:hover{border-color:rgba(0,212,255,0.2);transform:translateY(-3px)}
-.testi-quote{
-  font-size:36px;color:var(--cyan);line-height:1;
-  font-family:'Clash Display',sans-serif;margin-bottom:12px;opacity:.5;
-}
-.testi-text{font-size:14px;color:var(--muted2);line-height:1.75;margin-bottom:20px;font-style:italic}
-.testi-author{display:flex;align-items:center;gap:12px}
-.testi-av{
-  width:40px;height:40px;border-radius:50%;
-  background:linear-gradient(135deg,var(--cyan),var(--violet));
+.tc:hover{border-color:var(--border2);transform:translateY(-2px)}
+.stars{color:var(--orange);font-size:12px;margin-bottom:8px}
+.tq{font-size:32px;color:var(--cyan);line-height:1;margin-bottom:8px;opacity:.4;font-family:'Syne',sans-serif}
+.tt{font-size:13.5px;color:var(--muted2);line-height:1.75;margin-bottom:18px;font-style:italic}
+.ta{display:flex;align-items:center;gap:10px}
+.tav{
+  width:36px;height:36px;border-radius:50%;
+  background:linear-gradient(135deg,var(--cyan),#0056ff);
   display:flex;align-items:center;justify-content:center;
-  font-weight:700;font-size:14px;color:#000;flex-shrink:0;
+  font-weight:700;font-size:13px;color:#000;flex-shrink:0;
 }
-.testi-name{font-weight:600;font-size:14px}
-.testi-role{font-size:12px;color:var(--muted)}
-.stars{color:var(--orange);font-size:13px;margin-bottom:12px}
+.tan{font-weight:600;font-size:13.5px}
+.tar{font-size:11.5px;color:var(--muted)}
 
-/* ══════════════════════════════════════════════
-   CONTACT
-══════════════════════════════════════════════ */
-#contact{}
-.contact-grid{display:grid;grid-template-columns:1fr 1.5fr;gap:40px;align-items:start}
-.contact-info{display:flex;flex-direction:column;gap:16px}
-.ci-card{
+/* CONTACT */
+.contact-grid{display:grid;grid-template-columns:1fr 1.4fr;gap:28px;align-items:start}
+.ci-list{display:flex;flex-direction:column;gap:12px}
+.ci{
   background:var(--card);border:1px solid var(--border);
-  border-radius:var(--r);padding:20px;
-  display:flex;align-items:center;gap:16px;
+  border-radius:10px;padding:16px 18px;
+  display:flex;align-items:center;gap:14px;
   transition:border-color .2s;
 }
-.ci-card:hover{border-color:rgba(0,212,255,0.2)}
-.ci-icon{
-  width:44px;height:44px;border-radius:12px;
+.ci:hover{border-color:var(--border2)}
+.ci-ic{
+  width:40px;height:40px;border-radius:10px;
   background:var(--cyan-dim);display:flex;align-items:center;
-  justify-content:center;color:var(--cyan);font-size:20px;flex-shrink:0;
+  justify-content:center;color:var(--cyan);font-size:18px;flex-shrink:0;
 }
-.ci-label{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:1px;margin-bottom:3px}
-.ci-val{font-size:14px;font-weight:600;color:var(--text)}
+.ci-lbl{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.8px;margin-bottom:2px}
+.ci-val{font-size:14px;font-weight:600}
 .ci-val a{color:var(--text);transition:color .2s}
 .ci-val a:hover{color:var(--cyan)}
-.wa-card{
-  background:linear-gradient(135deg,rgba(37,211,102,0.12),rgba(37,211,102,0.05));
-  border:1px solid rgba(37,211,102,0.25);
-  border-radius:var(--r2);padding:24px;margin-top:8px;
-  display:flex;align-items:center;gap:16px;
+.wa-box{
+  background:linear-gradient(135deg,rgba(29,185,84,0.1),rgba(29,185,84,0.04));
+  border:1px solid rgba(29,185,84,0.2);
+  border-radius:12px;padding:20px;margin-top:4px;
+  display:flex;align-items:center;gap:14px;
 }
-.wa-icon{font-size:32px;color:#25d366}
-.wa-title{font-weight:700;font-size:16px;margin-bottom:4px}
-.wa-sub{font-size:13px;color:var(--muted2)}
+.wa-ic{font-size:28px;color:#1db954}
+.wa-title{font-weight:700;font-size:15px;margin-bottom:3px}
+.wa-sub{font-size:12.5px;color:var(--muted2)}
 
-/* Form */
-.contact-form{
+/* FORM */
+.cf{
   background:var(--card);border:1px solid var(--border);
-  border-radius:var(--r2);padding:36px;
+  border-radius:12px;padding:28px;
 }
-.form-title{font-family:'Clash Display',sans-serif;font-size:22px;font-weight:700;margin-bottom:6px}
-.form-sub{font-size:14px;color:var(--muted2);margin-bottom:28px}
-.form-row{display:grid;grid-template-columns:1fr 1fr;gap:16px}
-.form-group{margin-bottom:16px}
-.form-group label{display:block;font-size:13px;font-weight:600;color:var(--muted2);margin-bottom:8px;text-transform:uppercase;letter-spacing:.5px}
-.form-control{
-  width:100%;background:var(--card2);
-  border:1px solid var(--border);border-radius:10px;
-  color:var(--text);font-family:'Plus Jakarta Sans',sans-serif;
-  font-size:14px;padding:12px 16px;
+.cf-title{font-family:'Syne',sans-serif;font-size:20px;font-weight:700;margin-bottom:4px}
+.cf-sub{font-size:13.5px;color:var(--muted2);margin-bottom:22px}
+.frow{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.fg{margin-bottom:14px}
+.fg label{display:block;font-size:12px;font-weight:600;color:var(--muted2);margin-bottom:6px;text-transform:uppercase;letter-spacing:.5px}
+.fc{
+  width:100%;background:rgba(255,255,255,0.04);
+  border:1px solid var(--border);border-radius:9px;
+  color:var(--text);font-family:'DM Sans',sans-serif;
+  font-size:14px;padding:11px 14px;
   transition:border-color .2s,box-shadow .2s;outline:none;
 }
-.form-control:focus{border-color:var(--cyan);box-shadow:0 0 0 3px var(--cyan-dim)}
-textarea.form-control{resize:vertical;min-height:130px}
-.form-status{
-  padding:12px 16px;border-radius:10px;font-size:14px;
-  margin-bottom:16px;display:none;
-}
-.form-status.success{background:var(--green-dim);color:var(--green);border:1px solid rgba(16,185,129,.2);display:block}
-.form-status.error{background:rgba(239,68,68,0.1);color:#f87171;border:1px solid rgba(239,68,68,.2);display:block}
-.form-status.loading{background:var(--cyan-dim);color:var(--cyan);border:1px solid rgba(0,212,255,.2);display:block}
+.fc:focus{border-color:var(--cyan);box-shadow:0 0 0 3px var(--cyan-dim)}
+textarea.fc{resize:vertical;min-height:120px}
+.fs{padding:11px 14px;border-radius:9px;font-size:13.5px;margin-bottom:14px;display:none}
+.fs.success{background:var(--green-dim);color:var(--green);border:1px solid rgba(0,217,139,.2);display:block}
+.fs.error{background:rgba(239,68,68,0.08);color:#f87171;border:1px solid rgba(239,68,68,.2);display:block}
+.fs.loading{background:var(--cyan-dim);color:var(--cyan);border:1px solid var(--border2);display:block}
 
-/* ══════════════════════════════════════════════
-   FOOTER
-══════════════════════════════════════════════ */
+/* FOOTER */
 footer{
   border-top:1px solid var(--border);
-  padding:28px 56px;margin-left:var(--sidebar);
+  padding:22px 52px;margin-left:var(--sidebar);
   display:flex;align-items:center;justify-content:space-between;
   font-size:13px;color:var(--muted);
   position:relative;z-index:1;
 }
-.footer-logo{font-family:'Clash Display',sans-serif;font-size:18px;font-weight:700;color:var(--cyan)}
+.fl{font-family:'Syne',sans-serif;font-size:17px;font-weight:800;color:var(--cyan)}
 
-/* Scroll top */
+/* SCROLL TOP */
 #scrollTop{
-  position:fixed;bottom:28px;right:28px;z-index:90;
-  width:44px;height:44px;background:var(--cyan);color:#000;
-  border-radius:12px;display:flex;align-items:center;justify-content:center;
-  font-size:20px;opacity:0;transition:all .3s;cursor:pointer;
-  transform:translateY(10px);
+  position:fixed;bottom:24px;right:24px;z-index:90;
+  width:40px;height:40px;background:var(--cyan);color:#000;
+  border-radius:10px;display:flex;align-items:center;justify-content:center;
+  font-size:18px;opacity:0;transition:all .3s;cursor:pointer;transform:translateY(8px);
 }
 #scrollTop.show{opacity:1;transform:translateY(0)}
 
-/* Floating WhatsApp */
+/* WA FLOAT */
 .wa-float{
-  position:fixed;bottom:80px;right:28px;z-index:90;
-  width:52px;height:52px;background:#25d366;border-radius:14px;
+  position:fixed;bottom:72px;right:24px;z-index:90;
+  width:46px;height:46px;background:#1db954;border-radius:12px;
   display:flex;align-items:center;justify-content:center;
-  font-size:26px;color:#fff;
-  box-shadow:0 6px 24px rgba(37,211,102,.4);
+  font-size:22px;color:#fff;
+  box-shadow:0 4px 20px rgba(29,185,84,.4);
   transition:transform .25s;cursor:pointer;
 }
-.wa-float:hover{transform:scale(1.1)}
+.wa-float:hover{transform:scale(1.08)}
 
-/* Fade in on scroll */
-.fade-in{opacity:0;transform:translateY(30px);transition:opacity .7s ease,transform .7s ease}
-.fade-in.visible{opacity:1;transform:translateY(0)}
+/* FADE IN */
+.fi{opacity:0;transform:translateY(24px);transition:opacity .65s ease,transform .65s ease}
+.fi.vis{opacity:1;transform:translateY(0)}
 
-/* ══════════════════════════════════════════════
-   RESPONSIVE
-══════════════════════════════════════════════ */
-@media(max-width:1100px){
-  .portfolio-grid,.services-grid,.testi-grid{grid-template-columns:repeat(2,1fr)}
+/* ═══ RESPONSIVE ═══ */
+@media(max-width:960px){
+  .port-grid,.srv-grid,.tg{grid-template-columns:repeat(2,1fr)}
 }
-@media(max-width:900px){
-  :root{--sidebar:0px}
-  .sidebar{transform:translateX(-100%)}
-  .sidebar.open{transform:translateX(0);--sidebar:260px}
-  .sidebar-overlay.show{display:block}
-  .sidebar-toggle{display:flex}
-  .main{margin-left:0}
-  footer{margin-left:0;flex-direction:column;gap:8px;text-align:center;padding:24px 20px}
-  section{padding:60px 24px}
-  #hero{padding:80px 24px}
+@media(max-width:800px){
+  .sidebar{transform:translateX(-260px)}
+  .sidebar.open{transform:translateX(0)}
+  .topbar{display:flex}
+  .main{margin-left:0;padding-top:56px}
+  footer{margin-left:0;flex-direction:column;gap:8px;text-align:center;padding:20px 18px}
+  section{padding:48px 18px}
+  #hero{padding:56px 18px;min-height:auto;padding-top:72px}
   .about-grid,.resume-grid,.contact-grid{grid-template-columns:1fr}
-  .form-row{grid-template-columns:1fr}
+  .frow{grid-template-columns:1fr}
+  .hero-stats{flex-direction:column;width:100%;max-width:280px}
+  .hs{border-right:none;border-bottom:1px solid var(--border);padding:14px 20px}
+  .hs:last-child{border-bottom:none}
 }
-@media(max-width:600px){
-  .portfolio-grid,.services-grid,.testi-grid{grid-template-columns:1fr}
-  .hero-stats{flex-direction:column;width:100%}
-  .hstat{border-right:none;border-bottom:1px solid var(--border)}
-  .hstat:last-child{border-bottom:none}
-  .hero-h{font-size:38px}
+@media(max-width:560px){
+  .port-grid,.srv-grid,.tg{grid-template-columns:1fr}
+  .skills-grid{grid-template-columns:1fr}
+  .hero-btns{flex-direction:column;align-items:flex-start}
+  .btn-p,.btn-wa,.btn-o{width:100%;justify-content:center}
+  .sh{font-size:26px}
 }
 </style>
 </head>
 <body>
 
-<!-- Custom Cursor -->
-<div class="cursor" id="cursor"></div>
-<div class="cursor-ring" id="cursorRing"></div>
+<!-- MOBILE TOPBAR -->
+<div class="topbar" id="topbar">
+  <div class="topbar-name"><em>W</em>aleed Anwar</div>
+  <div class="menu-btn" id="menuBtn"><i class="bi bi-list"></i></div>
+</div>
 
-<!-- Mobile Toggle -->
-<div class="sidebar-toggle" id="sidebarToggle"><i class="bi bi-list"></i></div>
-<div class="sidebar-overlay" id="sidebarOverlay"></div>
+<!-- OVERLAY -->
+<div class="overlay" id="overlay"></div>
 
-<!-- ══ SIDEBAR ══ -->
+<!-- SIDEBAR -->
 <aside class="sidebar" id="sidebar">
-  <div class="sidebar-logo">
-    <div class="sidebar-avatar">W</div>
-    <div class="name"><em>W</em>aleed Anwar</div>
-    <div class="role">Full Stack Developer</div>
+  <div class="sb-head">
+    <div class="sb-av">W</div>
+    <div class="sb-name"><em>W</em>aleed Anwar</div>
+    <div class="sb-role">Full Stack Developer</div>
+    <div class="sb-avail"><span class="dot"></span>Available for Freelance</div>
   </div>
-
-  <nav class="nav-section">
-    <div class="nav-label" style="margin-top:4px">Navigation</div>
-    <a href="#hero" class="nav-item active" onclick="setActive(this)">
-      <i class="bi bi-house-door"></i> Home
-    </a>
-    <a href="#about" class="nav-item" onclick="setActive(this)">
-      <i class="bi bi-person-circle"></i> About
-    </a>
-    <a href="#skills" class="nav-item" onclick="setActive(this)">
-      <i class="bi bi-bar-chart-steps"></i> Skills
-    </a>
-    <a href="#resume" class="nav-item" onclick="setActive(this)">
-      <i class="bi bi-file-earmark-person"></i> Resume
-    </a>
-    <a href="#portfolio" class="nav-item" onclick="setActive(this)">
-      <i class="bi bi-grid-3x3-gap"></i> Portfolio
-    </a>
-    <a href="#services" class="nav-item" onclick="setActive(this)">
-      <i class="bi bi-layers"></i> Services
-    </a>
-    <a href="#testimonials" class="nav-item" onclick="setActive(this)">
-      <i class="bi bi-chat-quote"></i> Testimonials
-    </a>
-    <a href="#contact" class="nav-item" onclick="setActive(this)">
-      <i class="bi bi-send"></i> Contact
-    </a>
+  <nav class="nav-links">
+    <a href="#hero" class="nav-a active" onclick="closeMenu()"><i class="bi bi-house-door"></i>Home</a>
+    <a href="#about" class="nav-a" onclick="closeMenu()"><i class="bi bi-person-circle"></i>About</a>
+    <a href="#skills" class="nav-a" onclick="closeMenu()"><i class="bi bi-bar-chart-steps"></i>Skills</a>
+    <a href="#resume" class="nav-a" onclick="closeMenu()"><i class="bi bi-file-earmark-person"></i>Resume</a>
+    <a href="#portfolio" class="nav-a" onclick="closeMenu()"><i class="bi bi-grid-3x3-gap"></i>Portfolio</a>
+    <a href="#services" class="nav-a" onclick="closeMenu()"><i class="bi bi-layers"></i>Services</a>
+    <a href="#testimonials" class="nav-a" onclick="closeMenu()"><i class="bi bi-chat-quote"></i>Testimonials</a>
+    <a href="#contact" class="nav-a" onclick="closeMenu()"><i class="bi bi-send"></i>Contact</a>
   </nav>
-
-  <div class="sidebar-socials">
-    <a href="https://www.facebook.com/share/1CBWeRTtH6/" target="_blank" class="soc-btn"><i class="bi bi-facebook"></i></a>
-    <a href="https://www.instagram.com/waleedanwar_?igsh=MTRqM3dpaDc1a3NwZg==" target="_blank" class="soc-btn"><i class="bi bi-instagram"></i></a>
-    <a href="https://www.linkedin.com/in/muhammad-waleed-anwar-452139309/" target="_blank" class="soc-btn"><i class="bi bi-linkedin"></i></a>
-    <a href="https://wa.me/923237216881" target="_blank" class="soc-btn"><i class="bi bi-whatsapp"></i></a>
+  <div class="sb-socials">
+    <a href="https://www.facebook.com/share/1CBWeRTtH6/" target="_blank" class="soc"><i class="bi bi-facebook"></i></a>
+    <a href="https://www.instagram.com/waleedanwar_" target="_blank" class="soc"><i class="bi bi-instagram"></i></a>
+    <a href="https://www.linkedin.com/in/muhammad-waleed-anwar-452139309/" target="_blank" class="soc"><i class="bi bi-linkedin"></i></a>
+    <a href="https://wa.me/923237216881" target="_blank" class="soc"><i class="bi bi-whatsapp"></i></a>
   </div>
 </aside>
 
-<!-- ══ MAIN ══ -->
 <div class="main">
 
-  <!-- ══ HERO ══ -->
-  <section id="hero">
-    <div class="hero-bg-grid"></div>
-    <div class="hero-glow"></div>
-    <div class="hero-glow2"></div>
-    <div class="hero-content">
-      <div class="hero-status">
-        <span class="pulse"></span>
-        Available for freelance projects — Let's build something great
-      </div>
-      <h1 class="hero-h">
-        Hey, I'm<br>
-        <span class="line2">Waleed Anwar</span>
-        <span class="line3">I'm a <span class="typed-text" id="typedEl"></span><span class="blink">|</span></span>
-      </h1>
-      <p class="hero-desc">
-        Full Stack Web Developer & eCommerce Specialist based in Faisalabad, Pakistan. I build fast, beautiful, and conversion-focused websites — from custom web apps to high-performing Shopify stores.
-      </p>
-      <div class="hero-btns">
-        <a href="#contact" class="btn-cta"><i class="bi bi-send-fill"></i> Hire Me Now</a>
-        <a href="https://wa.me/923237216881" target="_blank" class="btn-wa"><i class="bi bi-whatsapp"></i> WhatsApp Me</a>
-        <a href="#portfolio" class="btn-outline"><i class="bi bi-grid-3x3-gap"></i> View Work</a>
-      </div>
-      <div class="hero-stats">
-        <div class="hstat">
-          <div class="hstat-num">50+</div>
-          <div class="hstat-label">Projects Done</div>
-        </div>
-        <div class="hstat">
-          <div class="hstat-num">2+</div>
-          <div class="hstat-label">Years Exp.</div>
-        </div>
-        <div class="hstat">
-          <div class="hstat-num">30+</div>
-          <div class="hstat-label">Happy Clients</div>
-        </div>
-        <div class="hstat">
-          <div class="hstat-num">100%</div>
-          <div class="hstat-label">Satisfaction</div>
-        </div>
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-grid"></div>
+  <div class="hero-glow"></div>
+  <div class="hc">
+    <div class="hero-tag">
+      <span class="g"></span>
+      Open to freelance & remote projects
+    </div>
+    <h1 class="hero-h">
+      Hey, I'm
+      <span class="name">Waleed Anwar</span>
+      <span class="sub">I build <span class="typed" id="typedEl"></span><span class="blink">|</span></span>
+    </h1>
+    <p class="hero-p">Full Stack Web Developer & eCommerce Specialist from Faisalabad, Pakistan. I craft fast, clean websites and high-converting Shopify stores that get results.</p>
+    <div class="hero-btns">
+      <a href="#contact" class="btn-p"><i class="bi bi-send-fill"></i>Hire Me</a>
+      <a href="https://wa.me/923237216881" target="_blank" class="btn-wa"><i class="bi bi-whatsapp"></i>WhatsApp</a>
+      <a href="#portfolio" class="btn-o"><i class="bi bi-grid-3x3-gap"></i>My Work</a>
+    </div>
+    <div class="hero-stats">
+      <div class="hs"><div class="hs-n">50+</div><div class="hs-l">Projects</div></div>
+      <div class="hs"><div class="hs-n">2+</div><div class="hs-l">Yrs Exp</div></div>
+      <div class="hs"><div class="hs-n">30+</div><div class="hs-l">Clients</div></div>
+      <div class="hs"><div class="hs-n">100%</div><div class="hs-l">Satisfaction</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about" class="fi">
+  <div class="badge"><span class="d"></span>About Me</div>
+  <h2 class="sh">Web Developer &<br><em>eCommerce Expert</em></h2>
+  <p class="ssub">From clean frontends to robust backends — I deliver full-cycle web solutions that help businesses grow online.</p>
+  <div class="about-grid">
+    <div class="card">
+      <p>I'm <strong>Waleed Anwar</strong>, a Full Stack Developer and eCommerce Specialist with a passion for building things that work beautifully. Every project I take on gets my full attention — from layout to logic.</p>
+      <p>I specialize in <strong>Shopify stores, WordPress sites, and custom web apps</strong>. My focus is always on performance, clean code, and user experience that actually converts.</p>
+      <p>Whether you're starting fresh or scaling up — I'm here to build it right.</p>
+      <div style="margin-top:18px">
+        <a href="#contact" class="btn-p" style="font-size:13.5px;padding:10px 20px"><i class="bi bi-chat-dots-fill"></i>Let's Talk</a>
       </div>
     </div>
-  </section>
+    <div class="card">
+      <div class="info-row"><span class="ik">Location</span><span class="iv">Faisalabad, Pakistan</span></div>
+      <div class="info-row"><span class="ik">Phone</span><span class="iv"><a href="tel:+923237216881">+92 323 721 6881</a></span></div>
+      <div class="info-row"><span class="ik">Email</span><span class="iv"><a href="mailto:waleeddogare@gmail.com">waleeddogare@gmail.com</a></span></div>
+      <div class="info-row"><span class="ik">Degree</span><span class="iv">BS CS — 5th Semester (Riphah)</span></div>
+      <div class="info-row"><span class="ik">Experience</span><span class="iv">2+ Years Freelance + Internship</span></div>
+      <div class="info-row"><span class="ik">Languages</span><span class="iv">English, Urdu</span></div>
+      <div class="info-row"><span class="ik">Response</span><span class="iv">Within 2–4 hours</span></div>
+    </div>
+  </div>
+</section>
 
-  <!-- ══ ABOUT ══ -->
-  <section id="about" class="fade-in">
-    <div class="section-badge"><span class="dot"></span>About Me</div>
-    <h2 class="section-h">Shopify Expert &<br><em>Full Stack Developer</em></h2>
-    <p class="section-sub">From clean front-end interfaces to robust back-end systems — I deliver full-cycle development solutions that help businesses thrive online.</p>
-    <div class="about-grid">
-      <div class="about-card">
-        <p class="about-text">I'm <strong>Waleed Anwar</strong>, a passionate Full Stack Web Developer and eCommerce Specialist with a sharp eye for detail and a strong sense of design. I specialize in building aesthetic, responsive, and user-friendly websites that don't just look good — but <strong>perform</strong>.</p>
-        <p class="about-text">Whether it's a simple portfolio, a dynamic web app, or a custom Shopify store, I approach each project with a focus on <strong>clarity, performance, and user experience</strong>.</p>
-        <p class="about-text">I'm also well-versed in Shopify development, helping eCommerce brands build, optimize, and scale their stores for maximum conversion.</p>
-        <div style="margin-top:20px">
-          <a href="#contact" class="btn-cta" style="font-size:14px;padding:11px 22px"><i class="bi bi-chat-dots-fill"></i> Let's Talk</a>
-        </div>
+<!-- SKILLS -->
+<section id="skills" class="fi">
+  <div class="badge"><span class="d"></span>Skills</div>
+  <h2 class="sh">Technical <em>Expertise</em></h2>
+  <p class="ssub">The tools and technologies I use to build, scale, and ship.</p>
+  <div class="skills-grid">
+    <div>
+      <div class="skill-bar"><div class="skill-top"><span class="skill-name">Shopify / Liquid</span><span class="skill-pct">97%</span></div><div class="skill-track"><div class="skill-fill" data-pct="97"></div></div></div>
+      <div class="skill-bar"><div class="skill-top"><span class="skill-name">WordPress / WooCommerce</span><span class="skill-pct">95%</span></div><div class="skill-track"><div class="skill-fill" data-pct="95"></div></div></div>
+      <div class="skill-bar"><div class="skill-top"><span class="skill-name">HTML5 / CSS3</span><span class="skill-pct">100%</span></div><div class="skill-track"><div class="skill-fill" data-pct="100"></div></div></div>
+      <div class="skill-bar"><div class="skill-top"><span class="skill-name">Tailwind CSS</span><span class="skill-pct">95%</span></div><div class="skill-track"><div class="skill-fill" data-pct="95"></div></div></div>
+      <div class="skill-bar"><div class="skill-top"><span class="skill-name">JavaScript</span><span class="skill-pct">83%</span></div><div class="skill-track"><div class="skill-fill" data-pct="83"></div></div></div>
+      <div class="skill-bar"><div class="skill-top"><span class="skill-name">Next.js</span><span class="skill-pct">90%</span></div><div class="skill-track"><div class="skill-fill" data-pct="90"></div></div></div>
+    </div>
+    <div>
+      <div class="skill-bar"><div class="skill-top"><span class="skill-name">Django / Python</span><span class="skill-pct">85%</span></div><div class="skill-track"><div class="skill-fill" data-pct="85"></div></div></div>
+      <div class="skill-bar"><div class="skill-top"><span class="skill-name">PHP</span><span class="skill-pct">80%</span></div><div class="skill-track"><div class="skill-fill" data-pct="80"></div></div></div>
+      <div class="skill-bar"><div class="skill-top"><span class="skill-name">MongoDB / MySQL</span><span class="skill-pct">82%</span></div><div class="skill-track"><div class="skill-fill" data-pct="82"></div></div></div>
+      <div class="skill-bar"><div class="skill-top"><span class="skill-name">Bootstrap</span><span class="skill-pct">88%</span></div><div class="skill-track"><div class="skill-fill" data-pct="88"></div></div></div>
+      <div class="skill-bar"><div class="skill-top"><span class="skill-name">GSAP Animations</span><span class="skill-pct">90%</span></div><div class="skill-track"><div class="skill-fill" data-pct="90"></div></div></div>
+      <div class="skill-bar"><div class="skill-top"><span class="skill-name">Figma / Photoshop</span><span class="skill-pct">88%</span></div><div class="skill-track"><div class="skill-fill" data-pct="88"></div></div></div>
+    </div>
+  </div>
+  <div class="tags">
+    <span class="tag">Git & GitHub</span><span class="tag">REST APIs</span><span class="tag">Elementor</span>
+    <span class="tag">Node.js</span><span class="tag">Canva</span><span class="tag">PostgreSQL</span>
+    <span class="tag">Vercel</span><span class="tag">Render</span><span class="tag">cPanel</span>
+    <span class="tag">Figma</span><span class="tag">SEO Setup</span><span class="tag">Speed Optimization</span>
+  </div>
+</section>
+
+<!-- RESUME -->
+<section id="resume" class="fi">
+  <div class="badge"><span class="d"></span>Resume</div>
+  <h2 class="sh">Experience &<br><em>Education</em></h2>
+  <p class="ssub">Real-world projects, hands-on internship, and a strong CS foundation.</p>
+  <div class="resume-grid">
+    <div class="rcol">
+      <h3><i class="bi bi-briefcase-fill" style="color:var(--cyan)"></i>Experience</h3>
+      <div class="tl">
+        <div class="tl-period"><i class="bi bi-calendar3"></i>2023 — Present</div>
+        <div class="tl-role">Shopify & WordPress Expert</div>
+        <div class="tl-org">Freelance — Remote (International Clients)</div>
+        <ul>
+          <li>Built high-converting Shopify stores for clients in Australia and UK</li>
+          <li>Custom WordPress sites with Elementor, WooCommerce & theme dev</li>
+          <li>Optimized stores for speed, UX, and conversion rates</li>
+          <li>Created social media graphics, ad creatives using Canva & Photoshop</li>
+        </ul>
       </div>
-      <div class="about-card">
-        <div class="info-list">
-          <div class="info-row"><span class="info-key">Birthday</span><span class="info-val">14 May 2003</span></div>
-          <div class="info-row"><span class="info-key">Age</span><span class="info-val">22 Years</span></div>
-          <div class="info-row"><span class="info-key">City</span><span class="info-val">Faisalabad, Pakistan</span></div>
-          <div class="info-row"><span class="info-key">Phone</span><span class="info-val"><a href="tel:+923237216881">+92 323 7216881</a></span></div>
-          <div class="info-row"><span class="info-key">Email</span><span class="info-val"><a href="mailto:waleeddogare@gmail.com">waleeddogare@gmail.com</a></span></div>
-          <div class="info-row"><span class="info-key">Degree</span><span class="info-val">BS Computer Science (5th Sem)</span></div>
-          <div class="info-row"><span class="info-key">Languages</span><span class="info-val">English, Urdu, Hindi</span></div>
-          <div class="info-row">
-            <span class="info-key">Status</span>
-            <span class="info-val">
-              <span class="avail-badge"><span class="dot"></span>Available for Freelance</span>
-            </span>
+      <div class="tl">
+        <div class="tl-period"><i class="bi bi-calendar3"></i>2023 — 2025</div>
+        <div class="tl-role">Full Stack Developer — Intern</div>
+        <div class="tl-org">Pebi Tech Software House</div>
+        <ul>
+          <li>Developed web apps using HTML, CSS, JS, Tailwind, PHP, Django, Next.js</li>
+          <li>Worked on client & admin panels with SQL and NoSQL databases</li>
+          <li>Used Git for version control and assisted in deployment pipelines</li>
+        </ul>
+      </div>
+    </div>
+    <div class="rcol">
+      <h3><i class="bi bi-mortarboard-fill" style="color:var(--cyan)"></i>Education</h3>
+      <div class="tl">
+        <div class="tl-period"><i class="bi bi-calendar3"></i>2023 — 2027</div>
+        <div class="tl-role">BS Computer Science</div>
+        <div class="tl-org">Riphah International University, Faisalabad — 5th Semester</div>
+        <div class="tl-desc">Data structures, algorithms, system design & software engineering.</div>
+      </div>
+      <div class="tl">
+        <div class="tl-period"><i class="bi bi-calendar3"></i>2022 — 2023</div>
+        <div class="tl-role">FSc Pre-Engineering</div>
+        <div class="tl-org">Punjab Group of Colleges, Faisalabad</div>
+        <div class="tl-desc">Mathematics, Physics, Chemistry — strong analytical foundation.</div>
+      </div>
+      <h3 style="margin-top:32px"><i class="bi bi-award-fill" style="color:var(--cyan)"></i>Certifications</h3>
+      <div class="tl">
+        <div class="tl-period"><i class="bi bi-patch-check-fill"></i>2024</div>
+        <div class="tl-role">Shopify Partner Certified</div>
+        <div class="tl-org">Self-certified via real-world practice & Shopify docs</div>
+      </div>
+      <div class="tl">
+        <div class="tl-period"><i class="bi bi-patch-check-fill"></i>2023</div>
+        <div class="tl-role">Full Stack Web Development</div>
+        <div class="tl-org">Practical Training — Pebi Tech Software House</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PORTFOLIO -->
+<section id="portfolio" class="fi">
+  <div class="badge"><span class="d"></span>Portfolio</div>
+  <h2 class="sh">Featured <em>Projects</em></h2>
+  <p class="ssub">Web apps, Shopify stores, WordPress sites — built for real clients, built to perform.</p>
+  <div class="port-grid">
+    <div class="pc fi"><div class="pc-img">🎾<span>Sports / UK</span></div><div class="pc-body"><div class="pc-num">01</div><div class="pc-title">Just Padel UK</div><div class="pc-desc">Premium padel court booking platform for a UK client. Clean, fast & fully responsive.</div><a href="https://justpadel.uk/" target="_blank" class="pc-link">Live Site <i class="bi bi-arrow-right"></i></a></div></div>
+    <div class="pc fi"><div class="pc-img">🏗️<span>Construction</span></div><div class="pc-body"><div class="pc-num">02</div><div class="pc-title">Bab Al Qasar Prefab</div><div class="pc-desc">Professional business website for a prefab construction company. Modern & corporate.</div><a href="https://babalqasarprefab.com/" target="_blank" class="pc-link">Live Site <i class="bi bi-arrow-right"></i></a></div></div>
+    <div class="pc fi"><div class="pc-img">🌐<span>Full Stack</span></div><div class="pc-body"><div class="pc-num">03</div><div class="pc-title">Full Stack Web App</div><div class="pc-desc">Complex full-stack web app for an Australian client — robust backend, clean UI.</div><a href="https://pi6.onrender.com/" target="_blank" class="pc-link">Live Site <i class="bi bi-arrow-right"></i></a></div></div>
+    <div class="pc fi"><div class="pc-img">🚗<span>Insurance</span></div><div class="pc-body"><div class="pc-num">04</div><div class="pc-title">Auto Insurance Quotes</div><div class="pc-desc">Fast, responsive insurance quotes site for Oasis Marketing — conversion-optimized.</div><a href="https://pi7.onrender.com/" target="_blank" class="pc-link">Live Site <i class="bi bi-arrow-right"></i></a></div></div>
+    <div class="pc fi"><div class="pc-img">🚕<span>Taxi Insurance</span></div><div class="pc-body"><div class="pc-num">05</div><div class="pc-title">Taxi Insurance Platform</div><div class="pc-desc">Full stack taxi insurance quotes platform for an Australian marketing company.</div><a href="https://pi8-b9ap.onrender.com/" target="_blank" class="pc-link">Live Site <i class="bi bi-arrow-right"></i></a></div></div>
+    <div class="pc fi"><div class="pc-img">🛒<span>Shopify Store</span></div><div class="pc-body"><div class="pc-num">06</div><div class="pc-title">Luna Sydney — Shopify</div><div class="pc-desc">Shopify dropshipping store for Australia — full setup, theme customization & optimization.</div><a href="https://www.lunasydney.com/" target="_blank" class="pc-link">Live Store <i class="bi bi-arrow-right"></i></a></div></div>
+    <div class="pc fi"><div class="pc-img">🏏<span>Court Booking</span></div><div class="pc-body"><div class="pc-num">07</div><div class="pc-title">Cricket Court Booking</div><div class="pc-desc">Clean mobile-first court booking app — real-time slot selection, smooth UX.</div><a href="https://cricket-zeta-hazel.vercel.app/" target="_blank" class="pc-link">Live Site <i class="bi bi-arrow-right"></i></a></div></div>
+    <div class="pc fi"><div class="pc-img">🛡️<span>Insurance Design</span></div><div class="pc-body"><div class="pc-num">08</div><div class="pc-title">Premium Insurance Site</div><div class="pc-desc">Premium static design for an insurance quotes site — clean layout, fast load time.</div><a href="https://pi-5-phi.vercel.app/" target="_blank" class="pc-link">Live Site <i class="bi bi-arrow-right"></i></a></div></div>
+    <div class="pc fi"><div class="pc-img">🎉<span>Event Page</span></div><div class="pc-body"><div class="pc-num">09</div><div class="pc-title">Birthday Invitation App</div><div class="pc-desc">Interactive animated birthday invitation — mobile-friendly and memorable.</div><a href="https://birthday-nine-flame-58.vercel.app/" target="_blank" class="pc-link">Live Site <i class="bi bi-arrow-right"></i></a></div></div>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section id="services" class="fi">
+  <div class="badge"><span class="d"></span>Services</div>
+  <h2 class="sh">What I <em>Offer</em></h2>
+  <p class="ssub">End-to-end digital solutions — web development, eCommerce, and design.</p>
+  <div class="srv-grid">
+    <div class="srv">
+      <div class="srv-icon"><i class="bi bi-shop"></i></div>
+      <div class="srv-title">Shopify Store Setup</div>
+      <div class="srv-desc">High-converting Shopify stores — from setup to launch. Theme customization, app integration & dropshipping.</div>
+      <div class="srv-tags"><span class="srv-tag">Shopify</span><span class="srv-tag">Liquid</span><span class="srv-tag">Dropshipping</span><span class="srv-tag">Speed Opt.</span></div>
+    </div>
+    <div class="srv">
+      <div class="srv-icon"><i class="bi bi-code-slash"></i></div>
+      <div class="srv-title">Full Stack Development</div>
+      <div class="srv-desc">Clean, responsive web apps and websites — frontend to backend. Modern stack, real results.</div>
+      <div class="srv-tags"><span class="srv-tag">Next.js</span><span class="srv-tag">Django</span><span class="srv-tag">PHP</span><span class="srv-tag">MongoDB</span></div>
+    </div>
+    <div class="srv">
+      <div class="srv-icon"><i class="bi bi-wordpress"></i></div>
+      <div class="srv-title">WordPress Development</div>
+      <div class="srv-desc">Custom WordPress & WooCommerce sites with Elementor. Fast, SEO-friendly, and easy to manage.</div>
+      <div class="srv-tags"><span class="srv-tag">Elementor</span><span class="srv-tag">WooCommerce</span><span class="srv-tag">SEO</span><span class="srv-tag">Custom Themes</span></div>
+    </div>
+    <div class="srv">
+      <div class="srv-icon"><i class="bi bi-graph-up-arrow"></i></div>
+      <div class="srv-title">eCommerce Growth</div>
+      <div class="srv-desc">Optimize your store for performance and conversions. Speed, UX improvements, and analytics setup.</div>
+      <div class="srv-tags"><span class="srv-tag">CRO</span><span class="srv-tag">Speed Boost</span><span class="srv-tag">Analytics</span><span class="srv-tag">Product Pages</span></div>
+    </div>
+    <div class="srv">
+      <div class="srv-icon"><i class="bi bi-palette"></i></div>
+      <div class="srv-title">UI/UX Design</div>
+      <div class="srv-desc">Pixel-perfect, intuitive interfaces designed to convert. Figma wireframes to live code.</div>
+      <div class="srv-tags"><span class="srv-tag">Figma</span><span class="srv-tag">Responsive</span><span class="srv-tag">Wireframing</span></div>
+    </div>
+    <div class="srv">
+      <div class="srv-icon"><i class="bi bi-brush"></i></div>
+      <div class="srv-title">Graphics & Branding</div>
+      <div class="srv-desc">Social media posts, product thumbnails, ad creatives and brand identity that stands out.</div>
+      <div class="srv-tags"><span class="srv-tag">Canva</span><span class="srv-tag">Photoshop</span><span class="srv-tag">Ad Creatives</span></div>
+    </div>
+  </div>
+  <div style="text-align:center;margin-top:36px">
+    <a href="https://wa.me/923237216881" target="_blank" class="btn-wa"><i class="bi bi-whatsapp"></i>Discuss Your Project on WhatsApp</a>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section id="testimonials" class="fi">
+  <div class="badge"><span class="d"></span>Reviews</div>
+  <h2 class="sh">What Clients <em>Say</em></h2>
+  <p class="ssub">Words from people I've had the privilege of working with.</p>
+  <div class="tg">
+    <div class="tc fi"><div class="stars">★★★★★</div><div class="tq">"</div><div class="tt">He handled both the frontend and backend of our web application with professionalism. The site is responsive, secure, and runs perfectly.</div><div class="ta"><div class="tav">S</div><div><div class="tan">Saul Goodman</div><div class="tar">CEO & Founder</div></div></div></div>
+    <div class="tc fi"><div class="stars">★★★★★</div><div class="tq">"</div><div class="tt">He built a fast, clean, and professional Shopify store that looks amazing and converts really well. Highly recommended!</div><div class="ta"><div class="tav">S</div><div><div class="tan">Sara Wilsson</div><div class="tar">Store Owner</div></div></div></div>
+    <div class="tc fi"><div class="stars">★★★★★</div><div class="tq">"</div><div class="tt">The thumbnails and social posts were on-brand, eye-catching, and effective. He delivered beyond expectations every time.</div><div class="ta"><div class="tav">J</div><div><div class="tan">Jena Karlis</div><div class="tar">Store Owner</div></div></div></div>
+    <div class="tc fi"><div class="stars">★★★★★</div><div class="tq">"</div><div class="tt">From development to design, everything was delivered on time and exactly how I imagined. Very easy to work with.</div><div class="ta"><div class="tav">M</div><div><div class="tan">Matt Brandon</div><div class="tar">Freelancer</div></div></div></div>
+    <div class="tc fi"><div class="stars">★★★★★</div><div class="tq">"</div><div class="tt">From product pages to checkout, everything works flawlessly. His attention to detail really brought our brand to life.</div><div class="ta"><div class="tav">J</div><div><div class="tan">John Larson</div><div class="tar">Entrepreneur</div></div></div></div>
+    <div class="tc fi"><div class="stars">★★★★★</div><div class="tq">"</div><div class="tt">Outstanding work on our Australian website. He understood our requirements perfectly and delivered a polished result on time.</div><div class="ta"><div class="tav">A</div><div><div class="tan">Alex Turner</div><div class="tar">Marketing Agency, AU</div></div></div></div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact" class="fi">
+  <div class="badge"><span class="d"></span>Contact</div>
+  <h2 class="sh">Have a Project?<br><em>Let's Talk</em></h2>
+  <p class="ssub">Available for freelance work and collaborations. I respond fast.</p>
+  <div class="contact-grid">
+    <div class="ci-list">
+      <div class="ci"><div class="ci-ic"><i class="bi bi-geo-alt-fill"></i></div><div><div class="ci-lbl">Location</div><div class="ci-val">Faisalabad, Pakistan</div></div></div>
+      <div class="ci"><div class="ci-ic"><i class="bi bi-telephone-fill"></i></div><div><div class="ci-lbl">Phone</div><div class="ci-val"><a href="tel:+923237216881">+92 323 721 6881</a></div></div></div>
+      <div class="ci"><div class="ci-ic"><i class="bi bi-envelope-fill"></i></div><div><div class="ci-lbl">Email</div><div class="ci-val"><a href="mailto:waleeddogare@gmail.com">waleeddogare@gmail.com</a></div></div></div>
+      <div class="ci"><div class="ci-ic"><i class="bi bi-clock-fill"></i></div><div><div class="ci-lbl">Response Time</div><div class="ci-val">Within 2–4 hours</div></div></div>
+      <div class="wa-box">
+        <div class="wa-ic"><i class="bi bi-whatsapp"></i></div>
+        <div>
+          <div class="wa-title">Chat on WhatsApp</div>
+          <div class="wa-sub">Fastest way to reach me</div>
+          <div style="margin-top:10px">
+            <a href="https://wa.me/923237216881" target="_blank" class="btn-wa" style="font-size:13px;padding:9px 18px"><i class="bi bi-whatsapp"></i>Open Chat</a>
           </div>
         </div>
       </div>
     </div>
-  </section>
-
-  <!-- ══ SKILLS ══ -->
-  <section id="skills" class="fade-in">
-    <div class="section-badge"><span class="dot"></span>Technical Skills</div>
-    <h2 class="section-h">My <em>Expertise</em></h2>
-    <p class="section-sub">Turning code into solutions and ideas into interactive experiences.</p>
-    <div class="skills-grid" id="skillsGrid">
-      <!-- Left col -->
-      <div>
-        <div class="skill-bar"><div class="skill-top"><span class="skill-name">HTML5</span><span class="skill-pct">100%</span></div><div class="skill-track"><div class="skill-fill" data-pct="100"></div></div></div>
-        <div class="skill-bar"><div class="skill-top"><span class="skill-name">CSS3</span><span class="skill-pct">90%</span></div><div class="skill-track"><div class="skill-fill" data-pct="90"></div></div></div>
-        <div class="skill-bar"><div class="skill-top"><span class="skill-name">JavaScript</span><span class="skill-pct">83%</span></div><div class="skill-track"><div class="skill-fill" data-pct="83"></div></div></div>
-        <div class="skill-bar"><div class="skill-top"><span class="skill-name">Tailwind CSS</span><span class="skill-pct">95%</span></div><div class="skill-track"><div class="skill-fill" data-pct="95"></div></div></div>
-        <div class="skill-bar"><div class="skill-top"><span class="skill-name">Bootstrap</span><span class="skill-pct">88%</span></div><div class="skill-track"><div class="skill-fill" data-pct="88"></div></div></div>
-        <div class="skill-bar"><div class="skill-top"><span class="skill-name">Next.js</span><span class="skill-pct">90%</span></div><div class="skill-track"><div class="skill-fill" data-pct="90"></div></div></div>
-      </div>
-      <!-- Right col -->
-      <div>
-        <div class="skill-bar"><div class="skill-top"><span class="skill-name">Shopify / Liquid</span><span class="skill-pct">97%</span></div><div class="skill-track"><div class="skill-fill" data-pct="97"></div></div></div>
-        <div class="skill-bar"><div class="skill-top"><span class="skill-name">WordPress</span><span class="skill-pct">95%</span></div><div class="skill-track"><div class="skill-fill" data-pct="95"></div></div></div>
-        <div class="skill-bar"><div class="skill-top"><span class="skill-name">PHP</span><span class="skill-pct">80%</span></div><div class="skill-track"><div class="skill-fill" data-pct="80"></div></div></div>
-        <div class="skill-bar"><div class="skill-top"><span class="skill-name">Django / Python</span><span class="skill-pct">85%</span></div><div class="skill-track"><div class="skill-fill" data-pct="85"></div></div></div>
-        <div class="skill-bar"><div class="skill-top"><span class="skill-name">GSAP Animations</span><span class="skill-pct">90%</span></div><div class="skill-track"><div class="skill-fill" data-pct="90"></div></div></div>
-        <div class="skill-bar"><div class="skill-top"><span class="skill-name">MongoDB / MySQL</span><span class="skill-pct">82%</span></div><div class="skill-track"><div class="skill-fill" data-pct="82"></div></div></div>
-      </div>
+    <div class="cf">
+      <div class="cf-title">Send a Message</div>
+      <div class="cf-sub">Fill out the form and I'll get back to you shortly.</div>
+      <div id="formStatus" class="fs"></div>
+      <form id="contactForm">
+        <div class="frow">
+          <div class="fg"><label>Your Name</label><input type="text" name="user_name" class="fc" placeholder="Waleed Anwar" required/></div>
+          <div class="fg"><label>Your Email</label><input type="email" name="user_email" class="fc" placeholder="you@example.com" required/></div>
+        </div>
+        <div class="fg"><label>Subject</label><input type="text" name="subject" class="fc" placeholder="Shopify Store / Web Development..." required/></div>
+        <div class="fg"><label>Message</label><textarea name="message" class="fc" placeholder="Tell me about your project..." required></textarea></div>
+        <button type="submit" class="btn-p" style="width:100%;justify-content:center" id="submitBtn">
+          <i class="bi bi-send-fill"></i>Send Message
+        </button>
+      </form>
     </div>
-    <div class="tags-wrap">
-      <span class="tag">Git & GitHub</span><span class="tag">REST APIs</span><span class="tag">Figma</span>
-      <span class="tag">Canva</span><span class="tag">Photoshop</span><span class="tag">Elementor</span>
-      <span class="tag">WooCommerce</span><span class="tag">PostgreSQL</span><span class="tag">Node.js</span>
-      <span class="tag">Vercel</span><span class="tag">Render</span><span class="tag">cPanel</span>
-    </div>
-  </section>
-
-  <!-- ══ RESUME ══ -->
-  <section id="resume" class="fade-in">
-    <div class="section-badge"><span class="dot"></span>Resume</div>
-    <h2 class="section-h">Experience &<br><em>Education</em></h2>
-    <p class="section-sub">Motivated and detail-oriented with hands-on experience in web projects and a strong desire to grow in a tech-driven environment.</p>
-    <div class="resume-grid">
-      <!-- Education -->
-      <div class="resume-col">
-        <h3><i class="bi bi-mortarboard-fill" style="color:var(--cyan)"></i> Education</h3>
-        <div class="timeline-item">
-          <div class="t-period"><i class="bi bi-calendar3"></i> 2023 — 2027</div>
-          <div class="t-role">BS Computer Science</div>
-          <div class="t-org">Riphah International University, Faisalabad — 5th Semester</div>
-          <div class="t-desc">Studying core CS concepts including data structures, algorithms, system design, and software engineering.</div>
-        </div>
-        <div class="timeline-item">
-          <div class="t-period"><i class="bi bi-calendar3"></i> 2022 — 2023</div>
-          <div class="t-role">FSc Pre-Engineering</div>
-          <div class="t-org">Punjab Group of Colleges, Faisalabad</div>
-          <div class="t-desc">Studied Mathematics, Physics, and Chemistry — building a strong foundation in analytical thinking and problem-solving.</div>
-        </div>
-
-        <h3 style="margin-top:40px"><i class="bi bi-award-fill" style="color:var(--cyan)"></i> Certifications</h3>
-        <div class="timeline-item">
-          <div class="t-period"><i class="bi bi-patch-check-fill"></i> 2024</div>
-          <div class="t-role">Shopify Partner Certified</div>
-          <div class="t-org">Self-certified through real-world practice & Shopify documentation</div>
-        </div>
-        <div class="timeline-item">
-          <div class="t-period"><i class="bi bi-patch-check-fill"></i> 2023</div>
-          <div class="t-role">Full Stack Web Development</div>
-          <div class="t-org">Practical training — Pebi Tech Software House</div>
-        </div>
-      </div>
-      <!-- Experience -->
-      <div class="resume-col">
-        <h3><i class="bi bi-briefcase-fill" style="color:var(--cyan)"></i> Experience</h3>
-        <div class="timeline-item">
-          <div class="t-period"><i class="bi bi-calendar3"></i> 2023 — 2025</div>
-          <div class="t-role">Full Stack Developer — Intern</div>
-          <div class="t-org">Pebi Tech Software House</div>
-          <ul class="t-list">
-            <li>Developed and maintained web applications using HTML, CSS, JS, Tailwind, PHP, Django, Next.js</li>
-            <li>Contributed to client and admin panels with SQL and NoSQL databases</li>
-            <li>Collaborated on eCommerce and CMS-based projects with senior developers</li>
-            <li>Gained hands-on experience with Git version control and deployment pipelines</li>
-          </ul>
-        </div>
-        <div class="timeline-item">
-          <div class="t-period"><i class="bi bi-calendar3"></i> 2023 — Present</div>
-          <div class="t-role">Shopify & WordPress Expert</div>
-          <div class="t-org">Freelance | Remote (International Clients)</div>
-          <ul class="t-list">
-            <li>Built and customized high-converting Shopify stores for clients in Australia and the UK</li>
-            <li>Designed social media graphics, product thumbnails, and ad creatives using Canva & Photoshop</li>
-            <li>Optimized stores for performance, responsiveness, and conversion rates</li>
-            <li>Built WordPress sites with Elementor, WooCommerce, and custom theme development</li>
-          </ul>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ══ PORTFOLIO ══ -->
-  <section id="portfolio" class="fade-in">
-    <div class="section-badge"><span class="dot"></span>My Work</div>
-    <h2 class="section-h">Featured <em>Projects</em></h2>
-    <p class="section-sub">I design, develop, and deliver — from custom web apps and WordPress sites to high-converting Shopify stores.</p>
-    <div class="portfolio-grid">
-
-      <div class="p-card fade-in">
-        <div class="p-img-wrap"><div class="p-img-placeholder">🎾<span>Padel / Sports</span></div></div>
-        <div class="p-body">
-          <div class="p-num">Project 01</div>
-          <div class="p-title">Just Padel UK</div>
-          <div class="p-desc">Eco-friendly, efficient, and built for modern sports. Premium padel court booking platform for a UK client.</div>
-          <a href="https://justpadel.uk/" target="_blank" class="p-link">Visit Live Site →</a>
-        </div>
-      </div>
-
-      <div class="p-card fade-in">
-        <div class="p-img-wrap"><div class="p-img-placeholder">🏗️<span>Construction</span></div></div>
-        <div class="p-body">
-          <div class="p-num">Project 02</div>
-          <div class="p-title">Bab Al Qasar Prefab</div>
-          <div class="p-desc">Smart, durable, and cost-effective prefab construction solutions — professional business website.</div>
-          <a href="https://babalqasarprefab.com/" target="_blank" class="p-link">Visit Live Site →</a>
-        </div>
-      </div>
-
-      <div class="p-card fade-in">
-        <div class="p-img-wrap"><div class="p-img-placeholder">🌐<span>Full Stack App</span></div></div>
-        <div class="p-body">
-          <div class="p-num">Project 03</div>
-          <div class="p-title">Full Stack Web App</div>
-          <div class="p-desc">Full-stack web application built for an Australian client. Complex backend with clean, modern UI.</div>
-          <a href="https://pi6.onrender.com/" target="_blank" class="p-link">Visit Live Site →</a>
-        </div>
-      </div>
-
-      <div class="p-card fade-in">
-        <div class="p-img-wrap"><div class="p-img-placeholder">🚗<span>Insurance</span></div></div>
-        <div class="p-body">
-          <div class="p-num">Project 04</div>
-          <div class="p-title">Auto Insurance Quotes</div>
-          <div class="p-desc">Auto Insurance Quotes site for Oasis Marketing agency. Fast, responsive, conversion-optimized.</div>
-          <a href="https://pi7.onrender.com/" target="_blank" class="p-link">Visit Live Site →</a>
-        </div>
-      </div>
-
-      <div class="p-card fade-in">
-        <div class="p-img-wrap"><div class="p-img-placeholder">🚕<span>Taxi Insurance</span></div></div>
-        <div class="p-body">
-          <div class="p-num">Project 05</div>
-          <div class="p-title">Taxi Insurance Platform</div>
-          <div class="p-desc">Full Stack taxi insurance quotes site built for an Australian marketing company with real-time quoting.</div>
-          <a href="https://pi8-b9ap.onrender.com/" target="_blank" class="p-link">Visit Live Site →</a>
-        </div>
-      </div>
-
-      <div class="p-card fade-in">
-        <div class="p-img-wrap"><div class="p-img-placeholder">🛡️<span>Insurance Design</span></div></div>
-        <div class="p-body">
-          <div class="p-num">Project 06</div>
-          <div class="p-title">Premium Insurance Site</div>
-          <div class="p-desc">Premium static design for an insurance quotes site — clean layout, fast load, professional aesthetic.</div>
-          <a href="https://pi-5-phi.vercel.app/" target="_blank" class="p-link">Visit Live Site →</a>
-        </div>
-      </div>
-
-      <div class="p-card fade-in">
-        <div class="p-img-wrap"><div class="p-img-placeholder">🏏<span>Court Booking</span></div></div>
-        <div class="p-body">
-          <div class="p-num">Project 07</div>
-          <div class="p-title">Cricket Court Booking</div>
-          <div class="p-desc">Premium court booking app design — clean UI, real-time slot booking, mobile-first responsive layout.</div>
-          <a href="https://cricket-zeta-hazel.vercel.app/" target="_blank" class="p-link">Visit Live Site →</a>
-        </div>
-      </div>
-
-      <div class="p-card fade-in">
-        <div class="p-img-wrap"><div class="p-img-placeholder">🛒<span>Shopify Store</span></div></div>
-        <div class="p-body">
-          <div class="p-num">Project 08</div>
-          <div class="p-title">Luna Sydney — Shopify</div>
-          <div class="p-desc">Shopify dropshipping store for the Australian market. Full store setup, theme customization & conversion optimization.</div>
-          <a href="https://www.lunasydney.com/" target="_blank" class="p-link">Visit Live Store →</a>
-        </div>
-      </div>
-
-      <div class="p-card fade-in">
-        <div class="p-img-wrap"><div class="p-img-placeholder">🎉<span>Event Page</span></div></div>
-        <div class="p-body">
-          <div class="p-num">Project 09</div>
-          <div class="p-title">Birthday Invitation App</div>
-          <div class="p-desc">Interactive birthday invitation link for a client — animated, mobile-friendly, and memorable.</div>
-          <a href="https://birthday-nine-flame-58.vercel.app/" target="_blank" class="p-link">Visit Live Site →</a>
-        </div>
-      </div>
-
-    </div>
-  </section>
-
-  <!-- ══ SERVICES ══ -->
-  <section id="services" class="fade-in">
-    <div class="section-badge"><span class="dot"></span>What I Do</div>
-    <h2 class="section-h">Services I <em>Offer</em></h2>
-    <p class="section-sub">Complete digital solutions — from full stack development and Shopify stores to eye-catching graphic designs.</p>
-    <div class="services-grid">
-      <div class="srv-card">
-        <div class="srv-icon"><i class="bi bi-code-slash"></i></div>
-        <div class="srv-title">Full Stack Development</div>
-        <div class="srv-desc">Building clean, responsive, and functional websites using modern technologies. Frontend to backend — I handle it all.</div>
-        <div class="srv-tags">
-          <span class="srv-tag">HTML/CSS</span><span class="srv-tag">JavaScript</span><span class="srv-tag">Next.js</span>
-          <span class="srv-tag">PHP</span><span class="srv-tag">Django</span><span class="srv-tag">Tailwind</span>
-          <span class="srv-tag">GSAP</span><span class="srv-tag">MongoDB</span><span class="srv-tag">MySQL</span>
-        </div>
-      </div>
-      <div class="srv-card">
-        <div class="srv-icon"><i class="bi bi-shop"></i></div>
-        <div class="srv-title">Shopify Store Setup</div>
-        <div class="srv-desc">Creating and customizing high-converting Shopify stores tailored to your brand. From setup to launch — ready to sell.</div>
-        <div class="srv-tags">
-          <span class="srv-tag">Shopify</span><span class="srv-tag">Liquid</span><span class="srv-tag">Theme Dev</span>
-          <span class="srv-tag">App Integration</span><span class="srv-tag">Dropshipping</span><span class="srv-tag">Speed Optimization</span>
-        </div>
-      </div>
-      <div class="srv-card">
-        <div class="srv-icon"><i class="bi bi-wordpress"></i></div>
-        <div class="srv-title">WordPress Development</div>
-        <div class="srv-desc">Building responsive, user-friendly WordPress websites. Custom themes, plugins, and WooCommerce stores.</div>
-        <div class="srv-tags">
-          <span class="srv-tag">Elementor</span><span class="srv-tag">WooCommerce</span><span class="srv-tag">Custom Themes</span>
-          <span class="srv-tag">Plugins</span><span class="srv-tag">SEO Setup</span>
-        </div>
-      </div>
-      <div class="srv-card">
-        <div class="srv-icon"><i class="bi bi-palette"></i></div>
-        <div class="srv-title">UI/UX Design</div>
-        <div class="srv-desc">Designing beautiful, intuitive interfaces that convert visitors into customers. Pixel-perfect designs with user experience at the core.</div>
-        <div class="srv-tags">
-          <span class="srv-tag">Figma</span><span class="srv-tag">Canva</span><span class="srv-tag">Photoshop</span>
-          <span class="srv-tag">Responsive Design</span><span class="srv-tag">Wireframing</span>
-        </div>
-      </div>
-      <div class="srv-card">
-        <div class="srv-icon"><i class="bi bi-graph-up-arrow"></i></div>
-        <div class="srv-title">eCommerce Growth</div>
-        <div class="srv-desc">Optimizing your online store for performance, conversions, and sales. Speed, UX, and marketing strategy combined.</div>
-        <div class="srv-tags">
-          <span class="srv-tag">Conversion Optimization</span><span class="srv-tag">Speed Boost</span>
-          <span class="srv-tag">Analytics</span><span class="srv-tag">Product Pages</span>
-        </div>
-      </div>
-      <div class="srv-card">
-        <div class="srv-icon"><i class="bi bi-brush"></i></div>
-        <div class="srv-title">Graphics & Branding</div>
-        <div class="srv-desc">Eye-catching social media posts, product thumbnails, ad creatives, and brand identity design that stands out.</div>
-        <div class="srv-tags">
-          <span class="srv-tag">Social Media Posts</span><span class="srv-tag">Ad Creatives</span>
-          <span class="srv-tag">Thumbnails</span><span class="srv-tag">Brand Identity</span>
-        </div>
-      </div>
-    </div>
-    <div style="text-align:center;margin-top:40px">
-      <a href="https://wa.me/923237216881" target="_blank" class="btn-wa"><i class="bi bi-whatsapp"></i> Discuss Your Project on WhatsApp</a>
-    </div>
-  </section>
-
-  <!-- ══ TESTIMONIALS ══ -->
-  <section id="testimonials" class="fade-in">
-    <div class="section-badge"><span class="dot"></span>Client Reviews</div>
-    <h2 class="section-h">What Clients <em>Say</em></h2>
-    <p class="section-sub">Words from the people I've had the privilege of working with.</p>
-    <div class="testi-grid">
-      <div class="testi-card fade-in">
-        <div class="stars">★★★★★</div>
-        <div class="testi-quote">"</div>
-        <div class="testi-text">He handled both the frontend and backend of our web application with professionalism and skill. The site is responsive, secure, and runs perfectly. We'll definitely work with him again.</div>
-        <div class="testi-author">
-          <div class="testi-av">S</div>
-          <div><div class="testi-name">Saul Goodman</div><div class="testi-role">CEO & Founder</div></div>
-        </div>
-      </div>
-      <div class="testi-card fade-in">
-        <div class="stars">★★★★★</div>
-        <div class="testi-quote">"</div>
-        <div class="testi-text">Working with him was a game changer for my business. He built a fast, clean, and professional Shopify store that looks amazing and converts really well. Highly recommended!</div>
-        <div class="testi-author">
-          <div class="testi-av">S</div>
-          <div><div class="testi-name">Sara Wilsson</div><div class="testi-role">Store Owner</div></div>
-        </div>
-      </div>
-      <div class="testi-card fade-in">
-        <div class="stars">★★★★★</div>
-        <div class="testi-quote">"</div>
-        <div class="testi-text">I needed engaging designs for our Instagram and Facebook ads, and he delivered beyond expectations. The thumbnails and social posts were on-brand, eye-catching, and effective.</div>
-        <div class="testi-author">
-          <div class="testi-av">J</div>
-          <div><div class="testi-name">Jena Karlis</div><div class="testi-role">Store Owner</div></div>
-        </div>
-      </div>
-      <div class="testi-card fade-in">
-        <div class="stars">★★★★★</div>
-        <div class="testi-quote">"</div>
-        <div class="testi-text">He's a one-man army! From development to design, everything was delivered on time and exactly how I imagined. Very easy to work with and super talented.</div>
-        <div class="testi-author">
-          <div class="testi-av">M</div>
-          <div><div class="testi-name">Matt Brandon</div><div class="testi-role">Freelancer</div></div>
-        </div>
-      </div>
-      <div class="testi-card fade-in">
-        <div class="stars">★★★★★</div>
-        <div class="testi-quote">"</div>
-        <div class="testi-text">From product pages to checkout, everything on our Shopify store works flawlessly. His attention to detail and design sense really brought our brand to life.</div>
-        <div class="testi-author">
-          <div class="testi-av">J</div>
-          <div><div class="testi-name">John Larson</div><div class="testi-role">Entrepreneur</div></div>
-        </div>
-      </div>
-      <div class="testi-card fade-in">
-        <div class="stars">★★★★★</div>
-        <div class="testi-quote">"</div>
-        <div class="testi-text">Outstanding work on our Australian website. He understood our requirements perfectly and delivered a polished, fast, and professional result on time.</div>
-        <div class="testi-author">
-          <div class="testi-av">A</div>
-          <div><div class="testi-name">Alex Turner</div><div class="testi-role">Marketing Agency, AU</div></div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ══ CONTACT ══ -->
-  <section id="contact" class="fade-in">
-    <div class="section-badge"><span class="dot"></span>Get In Touch</div>
-    <h2 class="section-h">Have a Project?<br><em>Let's Talk</em></h2>
-    <p class="section-sub">I'm available for freelance projects, full-time opportunities, and collaborations. Reach out — I respond fast.</p>
-    <div class="contact-grid">
-      <div class="contact-info">
-        <div class="ci-card">
-          <div class="ci-icon"><i class="bi bi-geo-alt-fill"></i></div>
-          <div><div class="ci-label">Location</div><div class="ci-val">Faisalabad, Punjab, Pakistan</div></div>
-        </div>
-        <div class="ci-card">
-          <div class="ci-icon"><i class="bi bi-telephone-fill"></i></div>
-          <div><div class="ci-label">Phone</div><div class="ci-val"><a href="tel:+923237216881">+92 323 7216881</a></div></div>
-        </div>
-        <div class="ci-card">
-          <div class="ci-icon"><i class="bi bi-envelope-fill"></i></div>
-          <div><div class="ci-label">Email</div><div class="ci-val"><a href="mailto:waleeddogare@gmail.com">waleeddogare@gmail.com</a></div></div>
-        </div>
-        <div class="ci-card">
-          <div class="ci-icon"><i class="bi bi-clock-fill"></i></div>
-          <div><div class="ci-label">Response Time</div><div class="ci-val">Usually within 2–4 hours</div></div>
-        </div>
-        <div class="wa-card">
-          <div class="wa-icon"><i class="bi bi-whatsapp"></i></div>
-          <div>
-            <div class="wa-title">Chat on WhatsApp</div>
-            <div class="wa-sub">Fastest way to reach me — click to start a chat now</div>
-            <div style="margin-top:12px">
-              <a href="https://wa.me/923237216881" target="_blank" class="btn-wa" style="font-size:14px;padding:10px 20px"><i class="bi bi-whatsapp"></i> Open WhatsApp</a>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Contact Form with EmailJS -->
-      <div class="contact-form">
-        <div class="form-title">Send a Message</div>
-        <div class="form-sub">Fill out the form below and I'll get back to you shortly.</div>
-        <div id="formStatus" class="form-status"></div>
-        <form id="contactForm">
-          <div class="form-row">
-            <div class="form-group">
-              <label>Your Name</label>
-              <input type="text" name="user_name" class="form-control" placeholder="Waleed Anwar" required/>
-            </div>
-            <div class="form-group">
-              <label>Your Email</label>
-              <input type="email" name="user_email" class="form-control" placeholder="you@example.com" required/>
-            </div>
-          </div>
-          <div class="form-group">
-            <label>Phone (Optional)</label>
-            <input type="text" name="user_phone" class="form-control" placeholder="+92 3XX XXXXXXX"/>
-          </div>
-          <div class="form-group">
-            <label>Subject</label>
-            <input type="text" name="subject" class="form-control" placeholder="Shopify Store Setup / Web Development..." required/>
-          </div>
-          <div class="form-group">
-            <label>Message</label>
-            <textarea name="message" class="form-control" placeholder="Tell me about your project, budget, timeline..." required></textarea>
-          </div>
-          <button type="submit" class="btn-cta" style="width:100%;justify-content:center;font-size:15px" id="submitBtn">
-            <i class="bi bi-send-fill"></i> Send Message
-          </button>
-        </form>
-      </div>
-    </div>
-  </section>
+  </div>
+</section>
 
 </div><!-- /main -->
 
-<!-- Footer -->
 <footer>
-  <div class="footer-logo">Waleed Anwar</div>
-  <div>© 2025 Waleed Anwar — All Rights Reserved</div>
-  <div style="display:flex;gap:12px">
+  <div class="fl">Waleed Anwar</div>
+  <div>© 2025 — All Rights Reserved</div>
+  <div style="display:flex;gap:10px">
     <a href="https://www.facebook.com/share/1CBWeRTtH6/" target="_blank" style="color:var(--muted);transition:color .2s" onmouseover="this.style.color='var(--cyan)'" onmouseout="this.style.color='var(--muted)'"><i class="bi bi-facebook"></i></a>
     <a href="https://www.instagram.com/waleedanwar_" target="_blank" style="color:var(--muted);transition:color .2s" onmouseover="this.style.color='var(--cyan)'" onmouseout="this.style.color='var(--muted)'"><i class="bi bi-instagram"></i></a>
     <a href="https://www.linkedin.com/in/muhammad-waleed-anwar-452139309/" target="_blank" style="color:var(--muted);transition:color .2s" onmouseover="this.style.color='var(--cyan)'" onmouseout="this.style.color='var(--muted)'"><i class="bi bi-linkedin"></i></a>
   </div>
 </footer>
 
-<!-- Floating WA & Scroll Top -->
-<a href="https://wa.me/923237216881" target="_blank" class="wa-float" title="Chat on WhatsApp"><i class="bi bi-whatsapp"></i></a>
-<div id="scrollTop" title="Back to top"><i class="bi bi-arrow-up"></i></div>
+<a href="https://wa.me/923237216881" target="_blank" class="wa-float" title="WhatsApp"><i class="bi bi-whatsapp"></i></a>
+<div id="scrollTop"><i class="bi bi-arrow-up"></i></div>
 
 <script>
-// ══ CURSOR ══
-const cursor = document.getElementById('cursor');
-const ring = document.getElementById('cursorRing');
-let mx=0,my=0,rx=0,ry=0;
-document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;cursor.style.left=mx+'px';cursor.style.top=my+'px'});
-(function animRing(){rx+=(mx-rx)*.12;ry+=(my-ry)*.12;ring.style.left=rx+'px';ring.style.top=ry+'px';requestAnimationFrame(animRing)})();
+// SIDEBAR TOGGLE (mobile only)
+const sidebar = document.getElementById('sidebar');
+const overlay = document.getElementById('overlay');
+const menuBtn = document.getElementById('menuBtn');
 
-// ══ TYPED ══
-const words=['Full Stack Developer','Shopify Expert','WordPress Specialist','UI/UX Designer','eCommerce Expert','Next.js Developer'];
+function openMenu() {
+  sidebar.classList.add('open');
+  overlay.classList.add('show');
+  document.body.style.overflow = 'hidden';
+}
+function closeMenu() {
+  sidebar.classList.remove('open');
+  overlay.classList.remove('show');
+  document.body.style.overflow = '';
+}
+menuBtn.addEventListener('click', openMenu);
+overlay.addEventListener('click', closeMenu);
+
+// TYPED
+const words = ['Shopify Stores','Web Apps','WordPress Sites','Fast Websites','eCommerce Solutions','Next.js Apps'];
 let wi=0,ci=0,del=false;
-const el=document.getElementById('typedEl');
+const el = document.getElementById('typedEl');
 function type(){
-  let w=words[wi];
-  if(!del){el.textContent=w.slice(0,++ci);if(ci===w.length){del=true;setTimeout(type,1800);return}}
-  else{el.textContent=w.slice(0,--ci);if(ci===0){del=false;wi=(wi+1)%words.length}}
-  setTimeout(type,del?60:90);
+  let w = words[wi];
+  if(!del){ el.textContent = w.slice(0,++ci); if(ci===w.length){del=true;setTimeout(type,1800);return} }
+  else{ el.textContent = w.slice(0,--ci); if(ci===0){del=false;wi=(wi+1)%words.length} }
+  setTimeout(type, del?55:85);
 }
 type();
 
-// ══ SIDEBAR TOGGLE ══
-const sidebar=document.getElementById('sidebar');
-const overlay=document.getElementById('sidebarOverlay');
-const toggle=document.getElementById('sidebarToggle');
-toggle.addEventListener('click',()=>{sidebar.classList.toggle('open');overlay.classList.toggle('show')});
-overlay.addEventListener('click',()=>{sidebar.classList.remove('open');overlay.classList.remove('show')});
-
-// ══ NAV ACTIVE ══
-function setActive(el){document.querySelectorAll('.nav-item').forEach(n=>n.classList.remove('active'));el.classList.add('active')}
-
-// ══ SCROLL-SPY ══
-const sections=document.querySelectorAll('section[id]');
-const navItems=document.querySelectorAll('.nav-item');
-window.addEventListener('scroll',()=>{
-  let cur='';
-  sections.forEach(s=>{if(window.scrollY>=s.offsetTop-120)cur=s.getAttribute('id')});
-  navItems.forEach(n=>{
-    n.classList.toggle('active',n.getAttribute('href')==='#'+cur);
-  });
-  // scroll top btn
-  const st=document.getElementById('scrollTop');
-  st.classList.toggle('show',window.scrollY>400);
+// SCROLL SPY
+const secs = document.querySelectorAll('section[id]');
+const navAs = document.querySelectorAll('.nav-a');
+window.addEventListener('scroll', () => {
+  let cur = '';
+  secs.forEach(s => { if(window.scrollY >= s.offsetTop - 100) cur = s.id; });
+  navAs.forEach(n => { n.classList.toggle('active', n.getAttribute('href') === '#'+cur); });
+  const st = document.getElementById('scrollTop');
+  st.classList.toggle('show', window.scrollY > 400);
 });
 
-// ══ SCROLL TOP ══
-document.getElementById('scrollTop').addEventListener('click',()=>window.scrollTo({top:0,behavior:'smooth'}));
+document.getElementById('scrollTop').addEventListener('click', () => window.scrollTo({top:0,behavior:'smooth'}));
 
-// ══ SKILL BARS (on scroll) ══
-const observer=new IntersectionObserver(entries=>{
-  entries.forEach(e=>{
-    if(e.isIntersecting){
-      e.target.querySelectorAll('.skill-fill').forEach(f=>{f.style.width=f.dataset.pct+'%'});
-    }
+// SKILL BARS
+const skillObs = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if(e.isIntersecting)
+      e.target.querySelectorAll('.skill-fill').forEach(f => { f.style.width = f.dataset.pct + '%'; });
   });
-},{threshold:.2});
-const skillsSection=document.querySelector('#skills');
-if(skillsSection)observer.observe(skillsSection);
+}, {threshold:.2});
+const skillSec = document.querySelector('#skills');
+if(skillSec) skillObs.observe(skillSec);
 
-// ══ FADE-IN ON SCROLL ══
-const fader=new IntersectionObserver(entries=>{
-  entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('visible')});
-},{threshold:.08});
-document.querySelectorAll('.fade-in').forEach(el=>fader.observe(el));
+// FADE IN
+const fader = new IntersectionObserver(entries => {
+  entries.forEach(e => { if(e.isIntersecting) e.target.classList.add('vis'); });
+}, {threshold:.07});
+document.querySelectorAll('.fi').forEach(el => fader.observe(el));
 
-// ══ EMAILJS CONTACT FORM ══
-emailjs.init('YOUR_EMAILJS_PUBLIC_KEY'); // <-- Replace with your EmailJS public key
+// EMAILJS
+emailjs.init('YOUR_EMAILJS_PUBLIC_KEY');
 
-document.getElementById('contactForm').addEventListener('submit',async function(e){
+document.getElementById('contactForm').addEventListener('submit', async function(e){
   e.preventDefault();
-  const btn=document.getElementById('submitBtn');
-  const status=document.getElementById('formStatus');
-  btn.disabled=true;btn.innerHTML='<i class="bi bi-hourglass-split"></i> Sending...';
-  status.className='form-status loading';status.textContent='Sending your message...';
+  const btn = document.getElementById('submitBtn');
+  const status = document.getElementById('formStatus');
+  btn.disabled = true;
+  btn.innerHTML = '<i class="bi bi-hourglass-split"></i>Sending...';
+  status.className = 'fs loading';
+  status.textContent = 'Sending your message...';
 
-  const params={
-    user_name:this.user_name.value,
-    user_email:this.user_email.value,
-    user_phone:this.user_phone.value||'Not provided',
-    subject:this.subject.value,
-    message:this.message.value,
-    to_email:'waleeddogare@gmail.com'
+  const params = {
+    user_name: this.user_name.value,
+    user_email: this.user_email.value,
+    subject: this.subject.value,
+    message: this.message.value,
+    to_email: 'waleeddogare@gmail.com'
   };
 
-  try{
-    // Option 1: EmailJS (replace service/template IDs below)
-    await emailjs.send('YOUR_SERVICE_ID','YOUR_TEMPLATE_ID',params);
-    status.className='form-status success';
-    status.innerHTML='✅ Message sent! I\'ll get back to you within 2–4 hours.';
+  try {
+    await emailjs.send('YOUR_SERVICE_ID','YOUR_TEMPLATE_ID', params);
+    status.className = 'fs success';
+    status.innerHTML = '✅ Message sent! I\'ll reply within 2–4 hours.';
     this.reset();
-  }catch(err){
-    // Fallback: open WhatsApp with form data
-    const waMsg=`Hello Waleed!%0A%0A*Name:* ${params.user_name}%0A*Email:* ${params.user_email}%0A*Subject:* ${params.subject}%0A%0A*Message:*%0A${params.message}`;
-    status.className='form-status error';
-    status.innerHTML=`⚠️ Email couldn't send. <a href="https://wa.me/923237216881?text=${waMsg}" target="_blank" style="color:var(--cyan);font-weight:700">Click here to send via WhatsApp instead →</a>`;
+  } catch(err) {
+    const waMsg = `Hello Waleed!%0A%0A*Name:* ${params.user_name}%0A*Email:* ${params.user_email}%0A*Subject:* ${params.subject}%0A%0A*Message:*%0A${params.message}`;
+    status.className = 'fs error';
+    status.innerHTML = `⚠️ Couldn't send via email. <a href="https://wa.me/923237216881?text=${waMsg}" target="_blank" style="color:var(--cyan);font-weight:700">Send via WhatsApp instead →</a>`;
   }
-  btn.disabled=false;btn.innerHTML='<i class="bi bi-send-fill"></i> Send Message';
+  btn.disabled = false;
+  btn.innerHTML = '<i class="bi bi-send-fill"></i>Send Message';
 });
 </script>
 </body>
